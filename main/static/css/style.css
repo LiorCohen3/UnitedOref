@@ -1,11 +1,105 @@
-* {font-family: 'Alef'; margin:0; padding:0;}
-
-body{
-    overflow-x: hidden;
-    background-color: #F6F8FA;
+/**
+ * @license
+ * Copyright 2019 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/** 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+#map {
+    height: 100%;
 }
 
-header{
+
+input[type="text"] {
+    background-color: #fff;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    padding: 0 0.5em;
+    font: 400 18px Roboto, Arial, sans-serif;
+    overflow: hidden;
+    line-height: 40px;
+    margin-right: 0;
+    min-width: 25%;
+}
+
+input[type="button"] {
+    background-color: #fff;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    padding: 0 0.5em;
+    font: 400 18px Roboto, Arial, sans-serif;
+    overflow: hidden;
+    height: 40px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+input[type="button"]:hover {
+    background: rgb(235, 235, 235);
+}
+
+input[type="button"].button-primary {
+    background-color: #1a73e8;
+    color: white;
+}
+
+input[type="button"].button-primary:hover {
+    background-color: #1765cc;
+}
+
+input[type="button"].button-secondary {
+    background-color: white;
+    color: #1a73e8;
+}
+
+input[type="button"].button-secondary:hover {
+    background-color: #d2e3fc;
+}
+
+#response-container {
+    background-color: #fff;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    padding: 0 0.5em;
+    font: 400 18px Roboto, Arial, sans-serif;
+    overflow: hidden;
+    overflow: auto;
+    max-height: 50%;
+    max-width: 90%;
+    background-color: rgba(255, 255, 255, 0.95);
+    font-size: small;
+}
+
+#saveB {
+    margin: 15px;
+}
+
+
+* {
+    font-family: 'Alef';
+    margin: 0;
+    padding: 0;
+}
+
+/* Optional: Makes the sample page fill the window. */
+
+body {
+    overflow-x: hidden;
+    background-color: #F6F8FA;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+header {
     position: fixed;
     top: 0px;
     z-index: 9999;
@@ -60,7 +154,7 @@ nav ul li a:hover {
     color: #ffffff;
 }
 
-li.selected a{
+li.selected a {
     color: #ffffff;
 }
 
@@ -72,12 +166,12 @@ li.selected a{
     border-radius: 50%;
 }
 
-nav img{
+nav img {
     width: 47px;
     height: 47px;
 }
 
-.plans_wrapper{
+.plans_wrapper {
     display: flex;
     flex-direction: column;
 
@@ -86,11 +180,11 @@ nav img{
     height: 100%;
 }
 
-.plans_wrapper > div {
+.plans_wrapper>div {
     margin-left: 5%;
 }
 
-.plans_holder{
+.plans_holder {
     display: flex;
     flex-wrap: wrap;
 
@@ -98,7 +192,7 @@ nav img{
     min-width: 1330px;
 }
 
-.plan{
+.plan {
     background-color: #EEEEEE;
     width: 465px;
     height: 310px;
@@ -113,7 +207,7 @@ nav img{
     overflow: hidden;
 }
 
-.plans_wrapper img{
+.plans_wrapper img {
     object-fit: cover;
     width: 100%;
     height: 100%;
@@ -122,12 +216,12 @@ nav img{
     border-top-right-radius: 20px;
 }
 
-.plans_wrapper h2{
+.plans_wrapper h2 {
     margin-top: 5px;
     margin-left: 10px;
 }
 
-.plan_title{
+.plan_title {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -136,12 +230,12 @@ nav img{
     height: 94px;
 }
 
-.plan_bottom{
+.plan_bottom {
     width: 465px;
     height: 94px;
 }
 
-.bar_white{
+.bar_white {
     position: relative;
     left: 1px;
 
@@ -152,35 +246,35 @@ nav img{
     height: 14px;
 }
 
-.bar_white.fill_98{
+.bar_white.fill_98 {
     width: 2%;
 }
 
-.bar_white.fill_92{
+.bar_white.fill_92 {
     width: 8%;
 }
 
-.bar_white.fill_88{
+.bar_white.fill_88 {
     width: 12%;
 }
 
-.bar_white.fill_80{
+.bar_white.fill_80 {
     width: 20%;
 }
 
-.bar_white.fill_67{
+.bar_white.fill_67 {
     width: 33%;
 }
 
-.bar_white.fill_54{
+.bar_white.fill_54 {
     width: 46%;
 }
 
-.bar_white.fill_30{
+.bar_white.fill_30 {
     width: 70%;
 }
 
-.bar_blue{
+.bar_blue {
     display: flex;
     justify-content: flex-end;
 
@@ -193,16 +287,16 @@ nav img{
     margin-left: 15px;
 }
 
-.bar_blue p{
+.bar_blue p {
     position: relative;
     top: -22px;
 }
 
-.plan_text_holder{
+.plan_text_holder {
     width: 80%;
 }
 
-.plan_details{
+.plan_details {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -210,25 +304,25 @@ nav img{
     height: 100%;
 }
 
-.exercises_list_div{
+.exercises_list_div {
     width: 95%;
 }
 
-.exercises_list_div ul{
+.exercises_list_div ul {
     margin-left: 7%;
 }
 
-.plan_bottom form{
+.plan_bottom form {
     height: 72%;
 }
 
-.plan_text_div{
+.plan_text_div {
     position: relative;
     display: flex;
     justify-content: space-between;
 }
 
-.text_decorator{
+.text_decorator {
     position: absolute;
     top: 20px;
     background-color: white;
@@ -236,7 +330,7 @@ nav img{
     width: 100%;
 }
 
-.button_div{
+.button_div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -245,7 +339,7 @@ nav img{
     height: 100%;
 }
 
-.submit_button{
+.submit_button {
     color: white;
     background-color: #FF914E;
     border-radius: 30px;
@@ -257,14 +351,14 @@ nav img{
 
 /* Styles for mobile */
 @media screen and (max-width: 768px) {
-    #logo{
+    #logo {
         position: fixed;
         width: 100%;
         height: 13.6%;
         background-image: url(../images/logo2.png);
     }
 
-    header{
+    header {
         position: fixed;
         top: unset;
         bottom: 0;
@@ -276,43 +370,43 @@ nav img{
         font-size: 14px;
     }
 
-    nav img{
+    nav img {
         width: 26px;
         height: 26px;
     }
 
-    .plans_wrapper{
+    .plans_wrapper {
         margin-top: 31%;
         margin-bottom: 10%;
     }
 
-    .plans_holder{
+    .plans_holder {
         min-height: 0;
         min-width: 0;
     }
 
-    .crop{
+    .crop {
         width: 100%;
         margin: 0 0;
     }
 
-    .plan{
+    .plan {
         width: 95%;
         height: 5%;
         margin-right: 0;
     }
 
-    .plan_bottom{
+    .plan_bottom {
         width: 100%;
 
     }
 
-    .plan_title{
+    .plan_title {
         width: 100%;
 
     }
 
-    .bar_blue{
+    .bar_blue {
         width: 93%;
     }
 }

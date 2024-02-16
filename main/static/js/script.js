@@ -11,13 +11,14 @@ let response;
 let ourlat;
 let ourlng;
 let saveB;
-const key = process.env.apikey;
+//const key = process.env.apikey;
 
 function initMap() {
+  /*
   let scriptElem = document.createElement('script');
   scriptElem.src = 'src="https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap&v=weekly"defer';
   document.getElementsByTagName('head')[0].appendChild(scriptElem);
-
+*/
   saveB = document.getElementById("saveB");
   saveB.addEventListener("click", () => {
     if (ourlat == undefined)
