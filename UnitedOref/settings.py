@@ -73,6 +73,8 @@ TEMPLATES = [
 
 LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = '/'
+AUTH_USER_MODEL = 'main.CustomUser'
+
 
 WSGI_APPLICATION = 'UnitedOref.wsgi.application'
 
