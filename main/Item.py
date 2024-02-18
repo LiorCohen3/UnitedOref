@@ -15,3 +15,21 @@ class Item:
     @property
     def name(self):
         return self._name
+    
+
+    @quantity_req.setter
+    def quantity_req(self, value):
+        if (value<0):
+            raise ValueError("value must be non-negative")
+        self._quantity_req = value
+
+    @quantity_res.setter
+    def quantity_res(self, value):
+        if (value<0):
+            raise ValueError("value must be non-negative")
+        self._quantity_res = value
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+

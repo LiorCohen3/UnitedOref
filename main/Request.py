@@ -1,33 +1,34 @@
 from enum import Enum
-import Location
-import Item
 import Date
+import Item 
+import Location
 
 class Status(Enum):
     PENDING = "Pending"
-    APPROVED = "Approved"
-    REJECTED = "Rejected"
+    Done = "Done"
+    NotDelivered = "Not Delivered"
 
 class Request:
-    def __init__(self, request_number, Status, location:Location, area, info, req_unit, donor, receiver, date :Date, items: Item=[]):
+    def __init__(self, request_number, donoStatus:Status, location:Location, area, info, req_unit, donor, receiver, reqDate :Date, items:Item=[]):
         self.request_number = request_number
-        self.status = Status
-        self.location = location
-        self.area = area
-        self.info = info
-        self.req_unit = req_unit
-        self.items = items
-        self.donor = donor
-        self.receiver = receiver
-        self.date = date
+        self._donoStatus = donoStatus
+        self._location = location
+        self._area = area
+        self._info = info
+        self._req_unit = req_unit
+        self._items = items
+        self._donor = donor
+        self._receiver = receiver
+        self._reqDate = reqDate
+        self._algScore=1
 
     @property
     def request_number(self):
         return self._request_number
 
     @property
-    def status(self):
-        return self._status
+    def donoStatus(self):
+        return self._donoStatus
 
     @property
     def location(self):
@@ -58,5 +59,69 @@ class Request:
         return self._receiver
 
     @property
-    def time_and_date(self):
-        return self._time_and_date
+    def reqDate(self):
+        return self._reqDate
+    
+    @property
+    def algScore(self):
+        return self._algScore
+    
+    @request_number.setter
+    def request_number(self, value):
+        if value < 0:
+            raise ValueError("value must be non-negative")
+        self._request_number = value
+
+    @donoStatus.setter
+    def donoStatus(self, value):
+        if value!=type(Status):
+            raise ValueError("value must be valid Status")
+        self._donoStatus = value
+
+    @location.setter
+    def location(self, value):
+        if value!=type(Location):
+            raise ValueError("value must be valid location")
+        self._location = value
+
+    @area.setter
+    def area(self, value):
+        self._area = value        
+
+    @req_unit.setter
+    def req_unit(self, value):
+        self.req_unit = value
+
+    @info.setter
+    def info(self, value):
+        self._info = value        
+
+    @req_unit.setter
+    def req_unit(self, value):
+        self._req_unit = value
+
+    @items.setter
+    def items(self, value):
+        if value!=type(Item):
+            raise ValueError("value must be valid location")
+        self._items = value
+
+    @donor.setter
+    def donor(self, value):
+        self._donor = value
+
+    @receiver.setter
+    def receiver(self, value):
+        self._receiver = value
+
+    @reqDate.setter
+    def reqDate(self, value):
+        if value!=type(Date):
+            raise ValueError("value must be valid Date")
+        self._reqDate = value
+    
+    @algScore.setter
+    def algScore(self, value):
+        if value < 0:
+            raise ValueError("value must be non-negative")
+        self._algScore = value

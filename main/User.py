@@ -1,12 +1,12 @@
 class User:
     def __init__(self, first_name, last_name, phone_number, email, password, unit, requests=[]):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.phone_number = phone_number
-        self.email = email
-        self.password = password
-        self.unit = unit
-        self.requests = requests
+        self._first_name = first_name
+        self._last_name = last_name
+        self._phone_number = phone_number
+        self._email = email
+        self._password = password
+        self._unit = unit
+        self._requests = requests
 
     @property
     def first_name(self):
