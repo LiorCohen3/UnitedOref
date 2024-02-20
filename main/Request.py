@@ -9,14 +9,14 @@ class Status(Enum):
     NotDelivered = "Not Delivered"
 
 class Request:
-    def __init__(self, request_number, donoStatus:Status, location:Location, area, info, req_unit, donor, receiver, reqDate :Date, items:Item=[]):
+    def __init__(self, request_number, donoStatus:Status, location:Location, area, info, req_unit, donor, receiver, reqDate :Date, item:Item):
         self.request_number = request_number
         self._donoStatus = donoStatus
         self._location = location
         self._area = area
         self._info = info
         self._req_unit = req_unit
-        self._items = items
+        self._item = item
         self._donor = donor
         self._receiver = receiver
         self._reqDate = reqDate
@@ -47,8 +47,8 @@ class Request:
         return self._req_unit
 
     @property
-    def items(self):
-        return self._items
+    def item(self):
+        return self._item
 
     @property
     def donor(self):
@@ -100,11 +100,11 @@ class Request:
     def req_unit(self, value):
         self._req_unit = value
 
-    @items.setter
-    def items(self, value):
+    @item.setter
+    def item(self, value):
         if value!=type(Item):
             raise ValueError("value must be valid location")
-        self._items = value
+        self._item = value
 
     @donor.setter
     def donor(self, value):

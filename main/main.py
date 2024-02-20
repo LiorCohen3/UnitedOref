@@ -3,32 +3,56 @@ from Item import Item
 from Location import Location
 from Request import Request
 from Request import Status
-from datetime import datetime
 
+hash_table = {
+    1: 'North',
+    2: 'Center',
+    3: 'South'
+}
 
-wqe = Item (10,1,"shit")
-itemList=[wqe,wqe,wqe]
+sentItem=Item (1,10,"shit")
 time=Date("yes")
 loc=Location(0,0)
-donation="" #???????
-request = Request(1,Status.Done,loc,"North","info",669,"donor","receiver",time,itemList)
-request2 = Request(2,Status.Done,loc,"North","info",669,"donor","receiver",time,itemList)
-request3 = Request(3,Status.Done,loc,"North","info",669,"donor","receiver",time,itemList)
-requests=[request,request2,request3,] #pull db
+donationArea=1 # 1-north  2-center  3-south
+donationType=1 # 1-food  2-equ
+donationAlg=1 # 1-auto  2-manual
+request1 = Request(1,Status.Done,loc,1,"info",669,"donor","receiver",time,sentItem)
+request2 = Request(2,Status.Done,loc,2,"info",669,"donor","receiver",time,sentItem)
+request3 = Request(3,Status.Done,loc,3,"info",669,"donor","receiver",time,sentItem)
+requests=[request1,request2,request3,] #pull db
 
-current_date_time = datetime.now()
-formatted_year = current_date_time.strftime("%y")
-formatted_month = current_date_time.strftime("%m")
-formatted_day=current_date_time.strftime("%d")
+#number of items in the request
+# 1-done 2-pending 3-not delivered
 
-for i in requests:
-    for j in i.items:
-        if(j.quantity_res>0):
+# time, order by fifo add to alg
+# item amount to donate and the type in auto alg
+
+def alg(area,type,alg):  #need to add item type, area, auto/manual
+    for i in requests:
+        if i.area== area:  #same area donation
             i.algScore+=10
-    i.algScore=i.algScore*(i.request_number/100)
-    print(i.algScore)
-    
-    
-            
-           
+        elif i.area-area==1:   #semi far area donation
+            i.algScore+=5
+        else:   #far area donation
+            i.algScore+=1
+        print("in area "+hash_table.get(i.area),i.algScore)
+
+        if i.item.itemType==type:
+            i.algScore+=10
+        else:
+            i.algScore+=5
+        print("type is worth",i.algScore)
+
+#       need to add a score system for time
+# 
+#       need to add a score system for food requested and what he can donate 50/30
+# 
         
+    if alg==1:
+        #return requests with highest score
+        print()
+    else:
+        #return all the
+        print()
+
+alg(donationArea,donationType,donationAlg)
