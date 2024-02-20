@@ -1,35 +1,33 @@
 class Item:
-    def __init__(self, quantity_req=0, quantity_res=0, name=""):
-        self._quantity_req = quantity_req
-        self._quantity_res = quantity_res
+    def __init__(self,itemType, quantityReq=0 , name=""):
+        self._itemType = itemType
+        self._quantity_req = quantityReq
         self._name = name
 
     @property
-    def quantity_req(self):
-        return self._quantity_req
-
+    def itemType(self):
+        return self._itemType
+    
     @property
-    def quantity_res(self):
-        return self._quantity_res
+    def quantityReq(self):
+        return self._quantityReq
 
     @property
     def name(self):
         return self._name
     
+    @itemType.setter
+    def itemType(self, value):
+        if (value!=1|value!=0):
+            raise ValueError("value must be valid type")
+        self._itemType = value
 
-    @quantity_req.setter
-    def quantity_req(self, value):
+    @quantityReq.setter
+    def quantityReq(self, value):
         if (value<0):
             raise ValueError("value must be non-negative")
-        self._quantity_req = value
-
-    @quantity_res.setter
-    def quantity_res(self, value):
-        if (value<0):
-            raise ValueError("value must be non-negative")
-        self._quantity_res = value
+        self._quantityReq = value
 
     @name.setter
     def name(self, value):
         self._name = value
-

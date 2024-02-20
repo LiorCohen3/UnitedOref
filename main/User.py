@@ -35,3 +35,31 @@ class User:
     @property
     def requests(self):
         return self._requests
+    
+    @first_name.setter
+    def first_name(self, value):
+        self._first_name = value
+
+    @last_name.setter
+    def last_name(self, value):
+        self._last_name = value
+
+    @phone_number.setter
+    def phone_number(self, value):
+        self._phone_number = value
+
+    @email.setter
+    def email(self, value):
+        self._email = value
+
+    @password.setter
+    def password(self, value):
+        self._password = value
+
+    @unit.setter
+    def unit(self, value):
+        self._unit = value
+
+    @requests.setter
+    def requests(self, value):
+        self._requests = value
