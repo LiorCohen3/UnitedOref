@@ -10,7 +10,7 @@ class Status(Enum):
 
 class Request:
     def __init__(self, request_number, donoStatus:Status, location:Location, area, info, req_unit, donor, receiver, reqDate :Date, item:Item):
-        self.request_number = request_number
+        self._request_number = request_number
         self._donoStatus = donoStatus
         self._location = location
         self._area = area
