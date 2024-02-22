@@ -1,15 +1,18 @@
 from enum import Enum
-import Date
-import Item 
-import Location
+import date
+import Item
+import location
 
-class Status(Enum):
-    PENDING = "Pending"
-    Done = "Done"
-    NotDelivered = "Not Delivered"
+
+class RequestStatusId(Enum):
+    DONE = 1
+    PENDING = 2
+    NOT_DELIVERED = 3
+
 
 class Request:
-    def __init__(self, request_number, donoStatus:Status, location:Location, area, info, req_unit, donor, receiver, reqDate :Date, item:Item):
+    def __init__(self, request_number, donoStatus: RequestStatusId, location: Location, area, info, req_unit, donor,
+                 receiver, reqDate: Date, item: Item):
         self._request_number = request_number
         self._donoStatus = donoStatus
         self._location = location
@@ -20,7 +23,7 @@ class Request:
         self._donor = donor
         self._receiver = receiver
         self._reqDate = reqDate
-        self._algScore=1
+        self._algScore = 1
 
     @property
     def request_number(self):
@@ -61,11 +64,11 @@ class Request:
     @property
     def reqDate(self):
         return self._reqDate
-    
+
     @property
     def algScore(self):
         return self._algScore
-    
+
     @request_number.setter
     def request_number(self, value):
         if value < 0:
@@ -74,19 +77,19 @@ class Request:
 
     @donoStatus.setter
     def donoStatus(self, value):
-        if value!=type(Status):
+        if value != type(RequestStatusId):
             raise ValueError("value must be valid Status")
         self._donoStatus = value
 
     @location.setter
     def location(self, value):
-        if value!=type(Location):
+        if value != type(Location):
             raise ValueError("value must be valid location")
         self._location = value
 
     @area.setter
     def area(self, value):
-        self._area = value        
+        self._area = value
 
     @req_unit.setter
     def req_unit(self, value):
@@ -94,7 +97,7 @@ class Request:
 
     @info.setter
     def info(self, value):
-        self._info = value        
+        self._info = value
 
     @req_unit.setter
     def req_unit(self, value):
@@ -102,7 +105,7 @@ class Request:
 
     @item.setter
     def item(self, value):
-        if value!=type(Item):
+        if value != type(Item):
             raise ValueError("value must be valid location")
         self._item = value
 
@@ -116,10 +119,10 @@ class Request:
 
     @reqDate.setter
     def reqDate(self, value):
-        if value!=type(Date):
+        if value != type(Date):
             raise ValueError("value must be valid Date")
         self._reqDate = value
-    
+
     @algScore.setter
     def algScore(self, value):
         if value < 0:
