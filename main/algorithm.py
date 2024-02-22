@@ -15,7 +15,7 @@ from datetime import datetime
 # donationCap=20
 
 
-def alg(requests_list, auto_match: bool, area="North", item_type=1):
+def alg(requests_list, auto_match: bool, area, item_type, donation_type=1):
     alg_score = {}
     current_date_time = datetime.now()
     current_year = current_date_time.year
@@ -24,15 +24,15 @@ def alg(requests_list, auto_match: bool, area="North", item_type=1):
     for index, req in enumerate(requests_list):
         alg_score[index] = 1
         if req.area == area:  # same area donation
-            alg_score[index] = alg_score[index] + 10
+            alg_score[index] = alg_score[index] + 200
         elif (area == "North" and req.area == "South") or (
                 area == "South" and req.area == "North"):  # far area donation
-            alg_score[index] = alg_score[index] + 1
-        else:  # semi far area donation
-            alg_score[index] = alg_score[index] + 5
-
-        if req.type_id == item_type:  # type of donation matchs
             alg_score[index] = alg_score[index] + 10
+        else:  # semi far area donation
+            alg_score[index] = alg_score[index] + 100
+
+        if req.type_id == int(item_type):  # type of donation matchs
+            alg_score[index] = alg_score[index] + 200
         # if request.type_id.quantityReq<=donationCap:    #he can donate more then the req
         #     alg_score[index]+=5*(donationCap/request.type_id.quantityReq)
         # else:   #the amount he can is lower then the req
@@ -47,7 +47,7 @@ def alg(requests_list, auto_match: bool, area="North", item_type=1):
         request_date = datetime(request_year, request_month, request_day)
         difference = current_date - request_date
         diff_days = difference.days if difference.days < 180 else 180  # 180 days is the maximum to be scored
-        alg_score[index] += (3 * diff_days)
+        alg_score[index] += (2 * diff_days)
 
     sorted_keys = list(sorted(alg_score, key=lambda x: alg_score[x], reverse=True))
     sorted_requests = [requests_list[i] for i in sorted_keys]

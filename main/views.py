@@ -28,10 +28,11 @@ def alg_result(request):
         if form.is_valid():
             area = form.cleaned_data['area']
             item_type = form.cleaned_data['item_type']
+            donation_type = form.cleaned_data['donation_type']
             count = form.cleaned_data['count']
             auto_match = form.cleaned_data['auto_match']
             requests_list = requests.objects.filter(requests_status_id=RequestStatusId.PENDING.value)
-            sorted_requests = alg(requests_list, auto_match, area, item_type)
+            sorted_requests = alg(requests_list, auto_match, area, donation_type, item_type)
             return render(request, 'request_list.html', {'requests': sorted_requests, 'form': form})
     else:
         form = DonationForm()

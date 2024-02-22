@@ -7,6 +7,10 @@ class DonationForm(forms.Form):
         ('Center', 'Center'),
         ('South', 'South'),
     ]
+    DONATION_TYPE = [
+        (1, 'Food'),
+        (2, 'Equipment')
+    ]
 
     ITEM_TYPE_CHOICES = [
         (1, 'Worm Food'),
@@ -26,5 +30,6 @@ class DonationForm(forms.Form):
 
     area = forms.ChoiceField(choices=AREA_CHOICES)
     item_type = forms.ChoiceField(choices=ITEM_TYPE_CHOICES)
+    donation_type = forms.ChoiceField(choices=DONATION_TYPE)
     count = forms.IntegerField()
     auto_match = forms.BooleanField(required=False, label="Auto match")
