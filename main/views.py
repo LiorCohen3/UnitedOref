@@ -14,7 +14,7 @@ def say_hello(request):
     return HttpResponse("Hello World")
 
 
-# @login_required()
+@login_required()
 def index(request):
     requests_list = requests.objects.filter(requests_status_id=RequestStatusId.PENDING.value)
     area = "North"
