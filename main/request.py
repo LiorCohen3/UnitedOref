@@ -1,7 +1,7 @@
 from enum import Enum
-from item import Item
-from location import Location
-from date import Date
+from main.item import Item
+from main.location import Location
+from main.date import Date
 
 
 class RequestStatusId(Enum):
