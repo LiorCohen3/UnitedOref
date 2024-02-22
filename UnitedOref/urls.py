@@ -20,7 +20,7 @@ from main import views
 
 urlpatterns = [
     path('auth/', include('authentication.urls')),
-    path('', views.index, name='index'),
+    path('', views.donation_form, name='Donation Form'),
     path('admin/', admin.site.urls),
     path('main/', include('main.urls'))
 ]

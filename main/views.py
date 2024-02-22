@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+from .forms import DonationForm
 from .request import RequestStatusId
 from .algorithm import alg
 from .models import requests
@@ -15,12 +16,26 @@ def say_hello(request):
 
 
 @login_required()
-def index(request):
-    requests_list = requests.objects.filter(requests_status_id=RequestStatusId.PENDING.value)
-    area = "North"
-    item_type = 1
-    sorted_requests = alg(requests_list, True, area, item_type)
-    return render(request, 'request_list.html', {'requests': sorted_requests})
+def donation_form(request):
+    form = DonationForm()
+    return render(request, 'donation_form.html', {'form': form})
+
+
+@login_required()
+def alg_result(request):
+    if request.method == 'POST':
+        form = DonationForm(request.POST)
+        if form.is_valid():
+            area = form.cleaned_data['area']
+            item_type = form.cleaned_data['item_type']
+            count = form.cleaned_data['count']
+            auto_match = form.cleaned_data['auto_match']
+            requests_list = requests.objects.filter(requests_status_id=RequestStatusId.PENDING.value)
+            sorted_requests = alg(requests_list, auto_match, area, item_type)
+            return render(request, 'request_list.html', {'requests': sorted_requests, 'form': form})
+    else:
+        form = DonationForm()
+    return render(request, 'request_list.html', {'form': form})
 
 
 # @login_required()
