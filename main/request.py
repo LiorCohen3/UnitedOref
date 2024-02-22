@@ -1,5 +1,7 @@
 from enum import Enum
-import Item
+from item import Item
+from location import Location
+from date import Date
 
 
 class RequestStatusId(Enum):
@@ -9,10 +11,10 @@ class RequestStatusId(Enum):
 
 
 class Request:
-    def __init__(self, request_number, donoStatus: RequestStatusId, location: Location, area, info, req_unit, donor,
-                 receiver, reqDate: Date, item: Item):
+    def __init__(self, request_number, donation_status: RequestStatusId, location: Location, area, info, req_unit, donor,
+                 receiver, req_date: Date, item: Item):
         self._request_number = request_number
-        self._donoStatus = donoStatus
+        self._donation_status = donation_status
         self._location = location
         self._area = area
         self._info = info
@@ -20,7 +22,7 @@ class Request:
         self._item = item
         self._donor = donor
         self._receiver = receiver
-        self._reqDate = reqDate
+        self._req_date = req_date
         self._algScore = 1
 
     @property
@@ -28,8 +30,8 @@ class Request:
         return self._request_number
 
     @property
-    def donoStatus(self):
-        return self._donoStatus
+    def donation_status(self):
+        return self._donation_status
 
     @property
     def location(self):
@@ -60,8 +62,8 @@ class Request:
         return self._receiver
 
     @property
-    def reqDate(self):
-        return self._reqDate
+    def req_date(self):
+        return self._req_date
 
     @property
     def algScore(self):
@@ -73,11 +75,11 @@ class Request:
             raise ValueError("value must be non-negative")
         self._request_number = value
 
-    @donoStatus.setter
-    def donoStatus(self, value):
+    @donation_status.setter
+    def donation_status(self, value):
         if value != type(RequestStatusId):
             raise ValueError("value must be valid Status")
-        self._donoStatus = value
+        self._donation_status = value
 
     @location.setter
     def location(self, value):
@@ -115,11 +117,11 @@ class Request:
     def receiver(self, value):
         self._receiver = value
 
-    @reqDate.setter
-    def reqDate(self, value):
+    @req_date.setter
+    def req_date(self, value):
         if value != type(Date):
-            raise ValueError("value must be valid Date")
-        self._reqDate = value
+            raise ValueError("value must be valid date")
+        self._req_date = value
 
     @algScore.setter
     def algScore(self, value):
