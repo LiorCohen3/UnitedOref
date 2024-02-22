@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="images/logo_title.png" type="image/png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alef">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+  integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+  crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+  integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+  crossorigin="anonymous"></script>
+
+  <title>New Donation</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+  <header><a href="#" id="logo"></a></header>
+  <nav>
+    <ul>
+      <li class="menu"><a href="#"><img src="{% static 'images/history.png' %}" alt="History">History</a></li>
+      <li class="selected menu"><a href="#"><img src="{% static 'images/dashboard_fill.svg' %}"
+            alt="Dashboard">Dashboard</a></li>
+      <li class="menu"><a href="#"><img src="{% static 'images/hourglass.png' %}" alt="Pending Requests">Pending
+          Requests</a></li>
+    </ul>
+  </nav>
+  <br><br><br><br>
+
+  <h2>New Donation</h2>
+  <div class="container text-center">
+    <label>Choose Donation Type:</label>
+    <div class="row">
+      <div class="col">
+          <article id="food"></article>
+      </div>
+      <div class="col">
+          <article id="equ"></article>
+      </div>
+    </div>
+    <div class="row">
+      <label>Choose your Area:</label>
+      <div class="col">
+        <article id="areaNorth"></article>
+      </div>
+      <div class="col">
+        <article id="areaCenter"></article>
+      </div>
+      <div class="col">
+        <article id="areaSouth"></article>
+      </div>
+    </div>
+    <label>Donation Method:</label>
+    <div class="row">
+      <div class="col">
+        <article id="auto"></article>
+      </div>
+      <div class="col">
+        <article id="manual"></article>
+      </div>
+    </div>
+  </div>
+
+  <button id="donationNext">Next</button>
+  <footer>
+  </footer>
+
+</body>
+
+</html>

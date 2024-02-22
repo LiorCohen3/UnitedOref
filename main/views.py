@@ -45,3 +45,6 @@ def dashboard(request):
 
 def request_list(request):
     return render(request, 'requesrList.html')
+
+def new_donation(request):
+    return render(request, 'NewDonation.html')
