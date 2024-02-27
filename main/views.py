@@ -55,11 +55,18 @@ def history(request):
 
 @login_required()
 def pending(request):
-    return render(request, 'pending.html')
+    pending_list = requests.objects.filter(
+        Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
+        Q(requests_status_id=RequestStatusId.PENDING.value) | Q(requests_status_id=RequestStatusId.NOT_DELIVERED.value)
+    )
+    return render(request, 'pending.html', {'pending_list': pending_list})
+
 
 @login_required()
 def request_list(request):
     return render(request, 'requesrList.html')
+
+
 @login_required()
 def new_donation(request):
     return render(request, 'NewDonation.html')
