@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
 from .forms import DonationForm
 from .request import RequestStatusId
 from .algorithm import alg
@@ -46,16 +46,20 @@ def dashboard(request):
 
 @login_required()
 def history(request):
-    return render(request, 'history.html')
+    history_request = requests.objects.filter(
+        Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
+        requests_status_id=RequestStatusId.DONE.value
+    )
+    return render(request, 'history.html', {'history_request': history_request})
 
 
 @login_required()
 def pending(request):
     return render(request, 'pending.html')
 
-
+@login_required()
 def request_list(request):
     return render(request, 'requesrList.html')
-
+@login_required()
 def new_donation(request):
     return render(request, 'NewDonation.html')

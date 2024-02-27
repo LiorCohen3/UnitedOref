@@ -16,75 +16,36 @@
 <div class="container text-center">
     <h1 class="text-center mb-4">History</h1>
 
+    <div class="row">
+            {% for request in history_request %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Display request information here -->
+                            <p>Request ID: {{ request.requests_id }}</p>
+                            <p>Status ID: {{ request.requests_status_id }}</p>
+                            <p>Donate User ID: {{ request.donate_user_id }}</p>
+                            <p>Receive User ID: {{ request.receive_user_id }}</p>
+                            <p>Location Lat: {{ request.location_lat }}</p>
+                            <p>Location Long: {{ request.location_long }}</p>
+                            <p>Area: {{ request.area }}</p>
+                            <p>Info: {{ request.info }}</p>
+                            <p>Type ID: {{ request.type_id }}</p>
+                            <p>Unit: {{ request.unit }}</p>
+                            <p>Date: {{ request.date }}</p>
+                            <p>Time: {{ request.time }}</p>
+                            <p>Schedule Date: {{ request.schedule_date }}</p>
+                            <p>Schedule Time: {{ request.schedule_time }}</p>
 
-    <div class="container mt-4">
-        <div class="row">
-            <!-- First Row -->
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 1</h5>
-                        <!--<h5 class="card-title">Request ID: {{ request.requests_id }}</h5>
-                        <p class="card-text">Status ID: {{ request.requests_status_id }}</p>
-                        <p class="card-text">Donate User ID: {{ request.donate_user_id }}</p>
-                        <p class="card-text">Receive User ID: {{ request.receive_user_id }}</p>
-                        <p class="card-text">Location: {{ request.area }} (Lat: {{ request.location_lat }}, Long:
-                            {{request.location_long }})</p>
-                        <p class="card-text">Information: {{ request.info }}</p>
-                        <p class="card-text">Type ID: {{ request.type_id }}</p>
-                        <p class="card-text">Unit: {{ request.unit }}</p>
-                        <p class="card-text">Date: {{ request.date }}</p>
-                        <p class="card-text">Time: {{ request.time }}</p>
-                        <p class="card-text">Schedule Date: {{ request.schedule_date }}</p>
-                        <p class="card-text">Schedule Time: {{ request.schedule_time }}</p>-->
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 2</h5>
-                        <!--<h5 class="card-title">Request ID: {{ request.requests_id }}</h5>
-                        <p class="card-text">Status ID: {{ request.requests_status_id }}</p>
-                        <p class="card-text">Donate User ID: {{ request.donate_user_id }}</p>
-                        <p class="card-text">Receive User ID: {{ request.receive_user_id }}</p>
-                        <p class="card-text">Location: {{ request.area }} (Lat: {{ request.location_lat }}, Long:
-                            {{request.location_long }})</p>
-                        <p class="card-text">Information: {{ request.info }}</p>
-                        <p class="card-text">Type ID: {{ request.type_id }}</p>
-                        <p class="card-text">Unit: {{ request.unit }}</p>
-                        <p class="card-text">Date: {{ request.date }}</p>
-                        <p class="card-text">Time: {{ request.time }}</p>
-                        <p class="card-text">Schedule Date: {{ request.schedule_date }}</p>
-                        <p class="card-text">Schedule Time: {{ request.schedule_time }}</p>-->
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card 3</h5>
-                        <!--<h5 class="card-title">Request ID: {{ request.requests_id }}</h5>
-                        <p class="card-text">Status ID: {{ request.requests_status_id }}</p>
-                        <p class="card-text">Donate User ID: {{ request.donate_user_id }}</p>
-                        <p class="card-text">Receive User ID: {{ request.receive_user_id }}</p>
-                        <p class="card-text">Location: {{ request.area }} (Lat: {{ request.location_lat }}, Long:
-                            {{request.location_long }})</p>
-                        <p class="card-text">Information: {{ request.info }}</p>
-                        <p class="card-text">Type ID: {{ request.type_id }}</p>
-                        <p class="card-text">Unit: {{ request.unit }}</p>
-                        <p class="card-text">Date: {{ request.date }}</p>
-                        <p class="card-text">Time: {{ request.time }}</p>
-                        <p class="card-text">Schedule Date: {{ request.schedule_date }}</p>
-                        <p class="card-text">Schedule Time: {{ request.schedule_time }}</p>-->
-                    </div>
-                </div>
-            </div>
+                {% if forloop.counter|divisibleby:3 %}
+                    </div><div class="row">
+                {% endif %}
+            {% endfor %}
         </div>
 
-    </div>
 </div>
 
 {% endblock %}
