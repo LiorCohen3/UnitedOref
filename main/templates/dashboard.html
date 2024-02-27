@@ -8,7 +8,7 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block menu_item2 %}
-<li class="selected menu"><a href="#"><img src="{% static 'images/dashboard_fill.svg' %}" alt="Dashboard">Dashboard</a></li>
+<li class="selected menu"><a href="{% url 'Dashboard' %}"><img src="{% static 'images/dashboard_fill.svg' %}" alt="Dashboard">Dashboard</a></li>
 {% endblock %}
 
 {% block content %}

@@ -39,9 +39,19 @@ def alg_result(request):
     return render(request, 'request_list.html', {'form': form})
 
 
-# @login_required()
+@login_required()
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+
+@login_required()
+def history(request):
+    return render(request, 'history.html')
+
+
+@login_required()
+def pending(request):
+    return render(request, 'pending.html')
 
 
 def request_list(request):

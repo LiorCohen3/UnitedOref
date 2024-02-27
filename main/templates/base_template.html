@@ -22,13 +22,13 @@
         <nav>
             <ul>
                 {% block menu_item1 %}
-                <li class="menu menu-margin"><a href="history"><img src="{% static 'images/history.png' %}" alt="History">History</a></li>
+                <li class="menu menu-margin"><a href="{% url 'History' %}"><img src="{% static 'images/history.png' %}" alt="History">History</a></li>
                 {% endblock %}
                 {% block menu_item2 %}
-                <li class="menu"><a href="dashboard"><img src="{% static 'images/dashboard.svg' %}" alt="Dashboard">Dashboard</a></li>
+                <li class="menu"><a href="{% url 'Dashboard' %}"><img src="{% static 'images/dashboard.svg' %}" alt="Dashboard">Dashboard</a></li>
                 {% endblock %}
                 {% block menu_item3 %}
-                <li class="menu"><a href="pending"><img src="{% static 'images/hourglass.png' %}" alt="Pending Requests">Pending Requests</a></li>
+                <li class="menu"><a href="{% url 'Pending' %}"><img src="{% static 'images/hourglass.png' %}" alt="Pending Requests">Pending Requests</a></li>
                 {% endblock %}
             </ul>
         </nav>
