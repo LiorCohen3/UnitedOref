@@ -13,12 +13,12 @@ class DonationForm(forms.Form):
     ]
 
     ITEM_TYPE_CHOICES = [
-        (1, 'Worm Food'),
+        (1, 'Warm Food'),
         (2, 'Dry Food'),
         (3, 'Snacks'),
         (4, 'Winter Clothing'),
         (5, 'Summer Clothing'),
-        (6, 'Underware'),
+        (6, 'Underwear'),
         (7, 'Socks'),
         (8, 'Tactical Vests'),
         (9, 'Tactical Gloves'),

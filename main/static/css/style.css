@@ -49,6 +49,7 @@ nav {
 nav ul {
     list-style-type: none;
     overflow: hidden;
+    height: 100%;
 }
 
 nav ul li {
@@ -75,6 +76,10 @@ li.selected a {
 
 .menu {
     font-size: 24px;
+}
+
+.menu-margin {
+    margin-right: 20px;
 }
 
 .jack {
