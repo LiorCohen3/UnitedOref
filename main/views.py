@@ -50,7 +50,41 @@ def history(request):
         Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
         requests_status_id=RequestStatusId.DONE.value
     )
-    return render(request, 'history.html', {'history_request': history_request})
+    filter_history = "none"
+    return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history})
+
+
+@login_required()
+def history_filter_by_date(request):
+    history_request = requests.objects.filter(
+        Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
+        requests_status_id=RequestStatusId.DONE.value
+    ).order_by('-date')
+    filter_history = "date"
+
+    return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history})
+
+
+@login_required()
+def history_filter_donate(request):
+    history_request = requests.objects.filter(
+        donate_user_id=request.user.id,
+        requests_status_id=RequestStatusId.DONE.value
+    )
+    filter_history = "donate"
+
+    return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history})
+
+
+@login_required()
+def history_filter_received(request):
+    history_request = requests.objects.filter(
+        receive_user_id=request.user.id,
+        requests_status_id=RequestStatusId.DONE.value
+    )
+    filter_history = "received"
+
+    return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history})
 
 
 @login_required()
@@ -59,6 +93,7 @@ def pending(request):
         Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
         Q(requests_status_id=RequestStatusId.PENDING.value) | Q(requests_status_id=RequestStatusId.NOT_DELIVERED.value)
     )
+
     return render(request, 'pending.html', {'pending_list': pending_list})
 
 
