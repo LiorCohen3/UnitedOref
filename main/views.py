@@ -8,6 +8,7 @@ from .forms import DonationForm
 from .request import RequestStatusId
 from .algorithm import alg
 from .models import requests
+from .models import CustomUser
 
 
 # @login_required()
@@ -41,22 +42,20 @@ def alg_result(request):
 
 @login_required()
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    requests_pending_list = requests.objects.filter(
+        Q(requests_status_id=RequestStatusId.PENDING.value) | Q(requests_status_id=RequestStatusId.NOT_DELIVERED.value))
+    requests_done_list = requests.objects.filter(requests_status_id=RequestStatusId.DONE.value)
+    profile = CustomUser.objects.filter(id=request.user.id)
+
+    return render(request, 'dashboard.html',
+                  {'requests_pending_list': requests_pending_list, 'requests_done_list': requests_done_list,
+                   'profile': profile})
 
 
 @login_required()
 def history(request):
     filter_value = request.GET.get('filter')
     sort_value = request.GET.get('sort_value')
-    print(sort_value)
-    print(filter_value)
-    # elif filter_value == "date_down":
-    #     history_request = requests.objects.filter(
-    #         Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
-    #         requests_status_id=RequestStatusId.DONE.value
-    #     ).order_by('date')
-    #     filter_history = "date_down"
-
     if filter_value == "donate":
         history_request = requests.objects.filter(
             donate_user_id=request.user.id,
@@ -73,7 +72,7 @@ def history(request):
 
     else:
         history_request = requests.objects.filter(
-           Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
+            Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
             requests_status_id=RequestStatusId.DONE.value
         )
         filter_history = "none"
@@ -84,8 +83,8 @@ def history(request):
     else:
         history_request = history_request.order_by('-date')
         sort_value = "sort_up"
-    return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history, 'sort_value': sort_value})
-
+    return render(request, 'history.html',
+                  {'history_request': history_request, 'filter_history': filter_history, 'sort_value': sort_value})
 
 
 @login_required()
@@ -106,6 +105,7 @@ def request_list(request):
 @login_required()
 def new_donation(request):
     return render(request, 'NewDonation.html')
+
 
 def api(request):
     return render(request, 'api.html')
