@@ -18,11 +18,11 @@
 <br><br>
 <div class="d-flex justify-content-center gap-2 mx-auto ">
     <i class="bi bi-sort-down my-auto"></i>
-    <button class="{% if sort_value == 'date_up' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
+    <button class="{% if sort_value == 'sort_up' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
             onclick="window.location.href='/main/history?filter={{filter_history}}&sort_value=sort_up'">Date
         <i class="bi bi-sort-up"></i>
     </button>
-    <button class="{% if sort_value == 'date_down' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
+    <button class="{% if sort_value == 'sort_down' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
             onclick="window.location.href='/main/history?filter={{filter_history}}&sort_value=sort_down'">Date
         <i class="bi bi-sort-up-alt"></i>
     </button>

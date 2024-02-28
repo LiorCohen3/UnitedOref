@@ -47,7 +47,7 @@ def dashboard(request):
 @login_required()
 def history(request):
     filter_value = request.GET.get('filter')
-    sort_value = request.GET.get('sort')
+    sort_value = request.GET.get('sort_value')
     print(sort_value)
     print(filter_value)
     # elif filter_value == "date_down":
@@ -78,12 +78,12 @@ def history(request):
         )
         filter_history = "none"
 
-    if sort_value == "none" or sort_value == "None" or sort_value == "sort_up":
-        history_request = history_request.order_by('-date')
-        sort_value = "date_up"
-    else:
+    if sort_value == "sort_down":
         history_request = history_request.order_by('date')
         sort_value = "sort_down"
+    else:
+        history_request = history_request.order_by('-date')
+        sort_value = "sort_up"
     return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history, 'sort_value': sort_value})
 
 
