@@ -13,14 +13,51 @@
 
 {% block content %}
     <br><br><br><br><br>
-    <article>
-        <aside class="info" id="basicInfo"></aside>
-        <label>Compleated Requests</label>
-        <aside class="info" id="compleatedInfo"></aside>
-        <br>
-        <aside class="info" id="userInfo"></aside>
-        <label>Pending Requests</label>
-        <aside class="info" id="pendingInfo"></aside>
-    </article>
-    <a href="{% url 'Donation Form' %}" class="btn btn-primary">Make a Donation!</a>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <p class="card-text">אני סמל אני תמונה</p>
+          <p class="card-text"> israel israeli</p>
+          <p class="card-text">צנחנים</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <h5 class="card-title">Completed Requests</h5>
+          <p class="card-text">Donor Area</p>
+          <p class="card-text">im a donation</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <p class="card-text">Full name</p>
+          <p class="card-text">Email</p>
+          <p class="card-text">Phone</p>
+          <p class="card-text">Unit</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-4">
+      <div class="card custom-card">
+        <div class="card-body">
+          <h5 class="card-title">Pending Requests</h5>
+          <p class="card-text">Donor Area</p>
+          <p class="card-text">im a donation</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <a href="{% url 'Donation Form' %}" class="btn btn-primary">Make a Donation!</a>
+
 {% endblock %}

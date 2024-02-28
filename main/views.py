@@ -105,3 +105,6 @@ def request_list(request):
 @login_required()
 def new_donation(request):
     return render(request, 'NewDonation.html')
+
+def api(request):
+    return render(request, 'api.html')

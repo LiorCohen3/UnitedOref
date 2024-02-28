@@ -11,20 +11,16 @@ let response;
 let ourlat;
 let ourlng;
 let saveB;
-//const key = process.env.apikey;
 
 function initMap() {
-  /*
-  let scriptElem = document.createElement('script');
-  scriptElem.src = 'src="https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap&v=weekly"defer';
-  document.getElementsByTagName('head')[0].appendChild(scriptElem);
-*/
+
   saveB = document.getElementById("saveB");
   saveB.addEventListener("click", () => {
     if (ourlat == undefined)
       console.log("must pick");
     else
-      window.open("https://www.google.com/maps/place/" + ourlat + "," + ourlng);
+      console.log(ourlat,ourlng);
+      //need to use those params to save
   });
 
   map = new google.maps.Map(document.getElementById("map"), {

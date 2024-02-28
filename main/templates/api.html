@@ -1,22 +1,17 @@
-<!DOCTYPE html>
-<!--
-  @license
-  Copyright 2019 Google LLC. All Rights Reserved.
-  SPDX-License-Identifier: Apache-2.0
--->
+{% extends 'base_template.html' %}
 {% load static %}
-<html>
+{% block extra_head %}
+    <script src="{% static 'js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/map.css' %}">
 
-<head>
-  <title>Geocoding Service</title>
-  <!--<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>-->
-  <script src="{% static 'js/script.js' %}"></script>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
 
-<body>
-  <div id="map"></div>
-  <button id="saveB">click me pls</button>
-</body>
+{% endblock %}
+{% block title %}Api{% endblock %}
 
-</html>
+{% block content %}
+<br><br><br><br><br><br><br>
+<div id="map" ></div>
+<button id="saveB">confirm</button>
+
+
+{% endblock %}
