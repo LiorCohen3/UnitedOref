@@ -46,45 +46,46 @@ def dashboard(request):
 
 @login_required()
 def history(request):
-    history_request = requests.objects.filter(
-        Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
-        requests_status_id=RequestStatusId.DONE.value
-    )
-    filter_history = "none"
-    return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history})
+    filter_value = request.GET.get('filter')
+    sort_value = request.GET.get('sort')
+    print(sort_value)
+    print(filter_value)
+    # elif filter_value == "date_down":
+    #     history_request = requests.objects.filter(
+    #         Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
+    #         requests_status_id=RequestStatusId.DONE.value
+    #     ).order_by('date')
+    #     filter_history = "date_down"
 
+    if filter_value == "donate":
+        history_request = requests.objects.filter(
+            donate_user_id=request.user.id,
+            requests_status_id=RequestStatusId.DONE.value
+        )
+        filter_history = "donate"
 
-@login_required()
-def history_filter_by_date(request):
-    history_request = requests.objects.filter(
-        Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
-        requests_status_id=RequestStatusId.DONE.value
-    ).order_by('-date')
-    filter_history = "date"
+    elif filter_value == "received":
+        history_request = requests.objects.filter(
+            receive_user_id=request.user.id,
+            requests_status_id=RequestStatusId.DONE.value
+        )
+        filter_history = "received"
 
-    return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history})
+    else:
+        history_request = requests.objects.filter(
+           Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
+            requests_status_id=RequestStatusId.DONE.value
+        )
+        filter_history = "none"
 
+    if sort_value == "none" or sort_value == "None" or sort_value == "sort_up":
+        history_request = history_request.order_by('-date')
+        sort_value = "date_up"
+    else:
+        history_request = history_request.order_by('date')
+        sort_value = "sort_down"
+    return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history, 'sort_value': sort_value})
 
-@login_required()
-def history_filter_donate(request):
-    history_request = requests.objects.filter(
-        donate_user_id=request.user.id,
-        requests_status_id=RequestStatusId.DONE.value
-    )
-    filter_history = "donate"
-
-    return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history})
-
-
-@login_required()
-def history_filter_received(request):
-    history_request = requests.objects.filter(
-        receive_user_id=request.user.id,
-        requests_status_id=RequestStatusId.DONE.value
-    )
-    filter_history = "received"
-
-    return render(request, 'history.html', {'history_request': history_request, 'filter_history': filter_history})
 
 
 @login_required()
