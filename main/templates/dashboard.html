@@ -19,9 +19,10 @@
     <div class="col-md-6 mb-4">
       <div class="card custom-card">
         <div class="card-body">
-          <p class="card-text">אני סמל אני תמונה</p>
-          <p class="card-text"> israel israeli</p>
-          <p class="card-text">צנחנים</p>
+          <img src="{{ profile.img }}">
+          <img src="{% static unit.img_url %}" alt="{{ unit.unit_name }}" title="{{ unit.unit_name }}">
+          <p class="card-text">{{ profile.first_name }} {{ profile.last_name }}</p>
+          <p class="card-text">{{ profile.unit }}</p>
         </div>
       </div>
     </div>
@@ -30,7 +31,9 @@
         <div class="card-body">
           <h5 class="card-title">Completed Requests</h5>
           <p class="card-text">Donor Area</p>
-          <p class="card-text">im a donation</p>
+          {% for done in requests_done_list %}
+          <p class="card-text">{{ done.area }}</p>
+          {% endfor %}
         </div>
       </div>
     </div>
@@ -39,10 +42,11 @@
     <div class="col-md-6 mb-4">
       <div class="card custom-card">
         <div class="card-body">
-          <p class="card-text">Full name</p>
-          <p class="card-text">Email</p>
-          <p class="card-text">Phone</p>
-          <p class="card-text">Unit</p>
+          <p class="card-text">Full Name {{ profile.first_name }} {{ profile.last_name }}</p>
+          <p class="card-text">Email {{ profile.email }}</p>
+          <p class="card-text">Phone {{ profile.phone }}</p>
+          <p class="card-text">Unit {{ profile.unit }}</p>
+          <a href="{% url 'Dashboard' %}" class="btn btn-primary">Edit</a>
         </div>
       </div>
     </div>
@@ -51,7 +55,9 @@
         <div class="card-body">
           <h5 class="card-title">Pending Requests</h5>
           <p class="card-text">Donor Area</p>
-          <p class="card-text">im a donation</p>
+          {% for pending in requests_pending_list %}
+          <p class="card-text">{{ pending.date }} {{ pending.area }}</p>
+          {% endfor %}
         </div>
       </div>
     </div>

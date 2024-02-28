@@ -9,6 +9,7 @@ from .request import RequestStatusId
 from .algorithm import alg
 from .models import requests
 from .models import CustomUser
+from .models import unit_img
 
 
 # @login_required()
@@ -43,13 +44,14 @@ def alg_result(request):
 @login_required()
 def dashboard(request):
     requests_pending_list = requests.objects.filter(
-        Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value))
-    requests_done_list = requests.objects.filter(requests_status=RequestStatusId.DONE.value)
-    profile = CustomUser.objects.filter(id=request.user.id)
+        Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value))[:5]
+    requests_done_list = requests.objects.filter(requests_status=RequestStatusId.DONE.value)[:5]
+    profile = CustomUser.objects.get(id=request.user.id)
+    unit = unit_img.objects.get(unit_name=profile.unit)
 
     return render(request, 'dashboard.html',
                   {'requests_pending_list': requests_pending_list, 'requests_done_list': requests_done_list,
-                   'profile': profile})
+                   'profile': profile, 'unit': unit})
 
 
 @login_required()
