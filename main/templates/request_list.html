@@ -8,7 +8,7 @@
 {% block title %}Requests List{% endblock %}
 
 {% block menu_item2 %}
-<li class="selected menu"><a href="dashboard"><img src="{% static 'images/dashboard_fill.svg' %}" alt="Dashboard">Dashboard</a></li>
+<li class="selected menu"><a href="{% url 'Dashboard' %}"><img src="{% static 'images/dashboard_fill.svg' %}" alt="Dashboard">Dashboard</a></li>
 {% endblock %}
 
 {% block content %}
@@ -21,12 +21,13 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Request ID: {{ request.requests_id }}</h5>
-                        <p class="card-text">Status ID: {{ request.requests_status_id }}</p>
-                        <p class="card-text">Donate User ID: {{ request.donate_user_id }}</p>
-                        <p class="card-text">Receive User ID: {{ request.receive_user_id }}</p>
+                        <p class="card-text">Status: {{ request.requests_status.request_status_name }}</p>
+                        <p class="card-text">Donor: {{ request.donate_user.first_name }} {{ request.donate_user.last_name }}</p>
+                        <p class="card-text">Requester: {{ request.requestor.first_name }} {{ request.requestor.last_name }}</p>
                         <p class="card-text">Location: {{ request.area }} (Lat: {{ request.location_lat }}, Long: {{ request.location_long }})</p>
                         <p class="card-text">Information: {{ request.info }}</p>
-                        <p class="card-text">Type ID: {{ request.type_id }}</p>
+                        <p class="card-text">Type: {% if request.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
+                        <p class="card-text">Item Type: {{ request.item_type.description }}</p>
                         <p class="card-text">Unit: {{ request.unit }}</p>
                         <p class="card-text">Date: {{ request.date }}</p>
                         <p class="card-text">Time: {{ request.time }}</p>

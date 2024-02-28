@@ -207,6 +207,29 @@ nav img {
     margin-left: 15px;
 }
 
+.btn.btn-xs {
+    padding: .25rem .4rem;
+    font-size: .875rem;
+    line-height: .5;
+    border-radius: .2rem;
+    height: 17px;
+    width: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bi-sort-down,
+.bi-sort-up {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color: inherit; /* Preserve the color of the icon */
+}
+
+
 .bar_blue p {
     position: relative;
     top: -22px;
