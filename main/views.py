@@ -32,7 +32,7 @@ def alg_result(request):
             donation_type = form.cleaned_data['donation_type']
             count = form.cleaned_data['count']
             auto_match = form.cleaned_data['auto_match']
-            requests_list = requests.objects.filter(requests_status_id=RequestStatusId.PENDING.value)
+            requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).select_related('requests_status', 'item_type').all()
             sorted_requests = alg(requests_list, auto_match, area, donation_type, item_type)
             return render(request, 'request_list.html', {'requests': sorted_requests, 'form': form})
     else:
@@ -43,8 +43,8 @@ def alg_result(request):
 @login_required()
 def dashboard(request):
     requests_pending_list = requests.objects.filter(
-        Q(requests_status_id=RequestStatusId.PENDING.value) | Q(requests_status_id=RequestStatusId.NOT_DELIVERED.value))
-    requests_done_list = requests.objects.filter(requests_status_id=RequestStatusId.DONE.value)
+        Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value))
+    requests_done_list = requests.objects.filter(requests_status=RequestStatusId.DONE.value)
     profile = CustomUser.objects.filter(id=request.user.id)
 
     return render(request, 'dashboard.html',
@@ -58,22 +58,22 @@ def history(request):
     sort_value = request.GET.get('sort_value')
     if filter_value == "donate":
         history_request = requests.objects.filter(
-            donate_user_id=request.user.id,
-            requests_status_id=RequestStatusId.DONE.value
+            donate_user=request.user.id,
+            requests_status=RequestStatusId.DONE.value
         )
         filter_history = "donate"
 
     elif filter_value == "received":
         history_request = requests.objects.filter(
-            receive_user_id=request.user.id,
-            requests_status_id=RequestStatusId.DONE.value
+            donate_user=request.user.id,
+            requests_status=RequestStatusId.DONE.value
         )
         filter_history = "received"
 
     else:
         history_request = requests.objects.filter(
-            Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
-            requests_status_id=RequestStatusId.DONE.value
+            Q(donate_user=request.user.id) | Q(requestor=request.user.id),
+            requests_status=RequestStatusId.DONE.value
         )
         filter_history = "none"
 
@@ -90,8 +90,8 @@ def history(request):
 @login_required()
 def pending(request):
     pending_list = requests.objects.filter(
-        Q(donate_user_id=request.user.id) | Q(receive_user_id=request.user.id),
-        Q(requests_status_id=RequestStatusId.PENDING.value) | Q(requests_status_id=RequestStatusId.NOT_DELIVERED.value)
+        Q(donate_user=request.user.id) | Q(requestor=request.user.id),
+        Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value)
     )
 
     return render(request, 'pending.html', {'pending_list': pending_list})

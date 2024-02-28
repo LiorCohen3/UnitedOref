@@ -20,7 +20,7 @@ class request_type(models.Model):
 class item_type(models.Model):
     item_type_id = models.AutoField(primary_key=True)
     description = models.CharField(max_length=45)
-    request_type = models.IntegerField(default=2)  # Assuming default value is 2
+    request_type = models.IntegerField(default=2)
 
 
 class request_status(models.Model):
@@ -30,14 +30,15 @@ class request_status(models.Model):
 
 class requests(models.Model):
     requests_id = models.AutoField(primary_key=True)
-    requests_status_id = models.IntegerField(default=2)
-    donate_user_id = models.IntegerField(default=0)
-    receive_user_id = models.IntegerField(null=False)
+    requests_status = models.ForeignKey(request_status, on_delete=models.CASCADE)
+    donate_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='donations')
+    requestor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='requestor')
     location_lat = models.FloatField(default=None, null=True)
     location_long = models.FloatField(default=None, null=True)
     area = models.CharField(max_length=45, default=None, null=True)
     info = models.CharField(max_length=45, default=None, null=True)
     type_id = models.IntegerField(default=None, null=True)
+    item_type = models.ForeignKey(item_type, on_delete=models.CASCADE)
     unit = models.CharField(max_length=45, default=None, null=True)
     date = models.DateField(auto_now_add=True)
     time = models.TimeField(auto_now_add=True)
@@ -56,5 +57,5 @@ class donation_items(models.Model):
     item_name = models.CharField(max_length=45, null=False)
     item_quantity = models.IntegerField(default=1, null=False)
     item_quantity_received = models.IntegerField(default=0, null=False)
-    item_type_id = models.IntegerField(null=True)
-    requests_id = models.IntegerField(null=True)
+    item_type = models.ForeignKey(item_type, on_delete=models.CASCADE)
+    requests = models.ForeignKey(requests, on_delete=models.CASCADE)
