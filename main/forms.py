@@ -38,3 +38,8 @@ class EditProfileForm(forms.Form):
     last_name = forms.CharField(max_length=45, required=True)
     phone = forms.CharField(max_length=45, required=True)
     email = forms.EmailField(max_length=254, required=True)
+
+
+class NewRequest(forms.Form):
+    item_name = forms.CharField(max_length=45, required=True)
+    item_type = forms.CharField(max_length=45, required=True)
