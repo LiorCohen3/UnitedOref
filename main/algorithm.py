@@ -5,6 +5,7 @@
 # from Request import Status
 from datetime import datetime
 
+
 # import models
 
 
@@ -15,7 +16,7 @@ from datetime import datetime
 # donationCap=20
 
 
-def alg(requests_list, auto_match: bool, area, item_type, donation_type=1):
+def alg(requests_list, area, item_type, count, auto_match: bool = True, donation_type=1):
     alg_score = {}
     current_date_time = datetime.now()
     current_year = current_date_time.year
@@ -31,12 +32,12 @@ def alg(requests_list, auto_match: bool, area, item_type, donation_type=1):
         else:  # semi far area donation
             alg_score[index] = alg_score[index] + 100
 
-        if req.type_id == int(item_type):  # type of donation matchs
+        if req.type_id == int(item_type):  # type of donation matches
             alg_score[index] = alg_score[index] + 200
-        # if request.type_id.quantityReq<=donationCap:    #he can donate more then the req
-        #     alg_score[index]+=5*(donationCap/request.type_id.quantityReq)
-        # else:   #the amount he can is lower then the req
-        #     alg_score[index]-=30
+        if req.item_quantity <= count:  # he can donate more than the req
+            alg_score[index] += 5 * (count / req.item_quantity)
+        else:  # the amount he can is lower than the req
+            alg_score[index] -= 30
 
         request_date = str(req.date).split('-')
         request_year = int(request_date[0])

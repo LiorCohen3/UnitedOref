@@ -1,5 +1,3 @@
-import time
-
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -15,15 +13,21 @@ from .models import CustomUser
 from .models import unit_img
 
 
-# @login_required()
-def say_hello(request):
-    return HttpResponse("Hello World")
-
-
 @login_required()
 def donation_form(request):
     form = DonationForm()
     return render(request, 'donation_form.html', {'form': form})
+
+
+@login_required()
+def donation_type(request):
+    if request.method == 'POST':
+        option = request.POST.get('option')
+        if option == 'option1':
+            return redirect('Donation Form')
+        elif option == 'option2':
+            return redirect('Manual Donation')
+    return render(request, 'donation_type.html')
 
 
 @login_required()
@@ -35,10 +39,11 @@ def alg_result(request):
             item_type = form.cleaned_data['item_type']
             donation_type = form.cleaned_data['donation_type']
             count = form.cleaned_data['count']
-            auto_match = form.cleaned_data['auto_match']
-            requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).select_related(
-                'requests_status', 'item_type').all()
-            sorted_requests = alg(requests_list, auto_match, area, donation_type, item_type)
+            requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).select_related('requests_status', 'item_type').all()
+            if not requests_list:
+                messages.info(request, 'Good news! There are currently no open requests.')
+                return redirect('Dashboard')
+            sorted_requests = alg(requests_list, area, item_type, count, donation_type)
             return render(request, 'request_list.html', {'requests': sorted_requests, 'form': form})
     else:
         form = DonationForm()

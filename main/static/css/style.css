@@ -4,8 +4,6 @@
     padding: 0;
 }
 
-/* Optional: Makes the sample page fill the window. */
-
 body {
     overflow-x: hidden;
     background-color: #F6F8FA;
@@ -207,6 +205,11 @@ nav img {
     margin-left: 15px;
 }
 
+.btn.theme-color {
+    background-color: #FF914E;
+    border-color: #FF914E;
+}
+
 .btn.btn-xs {
     padding: .25rem .4rem;
     font-size: .875rem;
@@ -229,6 +232,39 @@ nav img {
     color: inherit; /* Preserve the color of the icon */
 }
 
+.image-option {
+  display: inline-block;
+}
+
+.selected-card {
+    border: 2px solid #54AE58;
+}
+
+.selected-card::before {
+    content: '\2713';
+    position: absolute;
+    right: 5px;
+    color: #54AE58;
+    font-size: 20px;
+    border-radius: 50%;
+    background-color: transparent;
+    padding: 5px;
+}
+
+.fit {
+    width: fit-content;
+    height: fit-content;
+}
+
+.image-option input[type="radio"] {
+  display: none;
+}
+
+.image-option img {
+  width: 200px;
+  height: 210px;
+  border: 2px solid transparent;
+}
 
 .bar_blue p {
     position: relative;

@@ -20,11 +20,9 @@
     <button id="sortButton" class="bi bi-sort-down my-auto"></button>
     <button class="{% if sort_value == 'date_up' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
             onclick="window.location.href='/main/history?filter={{filter_history}}&sort_value=sort_up'">Date
-        <i class="bi bi-sort-up"></i>
     </button>
     <button class="{% if sort_value == 'date_down' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
             onclick="window.location.href='/main/history?filter={{filter_history}}&sort_value=sort_down'">Date
-        <i class="bi bi-sort-up-alt"></i>
     </button>
     <i class="bi bi-funnel my-auto"></i>
     <button class="{% if filter_history == 'donate' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
