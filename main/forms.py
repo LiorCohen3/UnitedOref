@@ -31,7 +31,6 @@ class DonationForm(forms.Form):
     item_type = forms.ChoiceField(choices=ITEM_TYPE_CHOICES)
     donation_type = forms.ChoiceField(choices=DONATION_TYPE)
     count = forms.IntegerField()
-    auto_match = forms.BooleanField(required=False, label="Auto match")
 
 
 class EditProfileForm(forms.Form):

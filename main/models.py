@@ -37,6 +37,8 @@ class requests(models.Model):
     location_long = models.FloatField(default=None, null=True)
     area = models.CharField(max_length=45, default=None, null=True)
     info = models.CharField(max_length=45, default=None, null=True)
+    item_name = models.CharField(max_length=45, null=False)
+    item_quantity = models.IntegerField(default=1, null=False)
     type_id = models.IntegerField(default=None, null=True)
     item_type = models.ForeignKey(item_type, on_delete=models.CASCADE)
     unit = models.CharField(max_length=45, default=None, null=True)
@@ -52,10 +54,8 @@ class unit_img(models.Model):
     unit_name = models.CharField(max_length=45, null=True)
 
 
-class donation_items(models.Model):
-    item_id = models.AutoField(primary_key=True)
-    item_name = models.CharField(max_length=45, null=False)
-    item_quantity = models.IntegerField(default=1, null=False)
-    item_quantity_received = models.IntegerField(default=0, null=False)
-    item_type = models.ForeignKey(item_type, on_delete=models.CASCADE)
-    requests = models.ForeignKey(requests, on_delete=models.CASCADE)
+# class donation_items(models.Model):
+#     item_id = models.AutoField(primary_key=True)
+#     item_quantity_received = models.IntegerField(default=0, null=False)
+#     item_type = models.ForeignKey(item_type, on_delete=models.CASCADE)
+#     requests = models.ForeignKey(requests, on_delete=models.CASCADE)
