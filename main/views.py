@@ -1,3 +1,5 @@
+import time
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -5,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .forms import DonationForm
-from .forms import EditForm
+from .forms import EditProfileForm
 from .request import RequestStatusId
 from .algorithm import alg
 from .models import requests
@@ -34,7 +36,8 @@ def alg_result(request):
             donation_type = form.cleaned_data['donation_type']
             count = form.cleaned_data['count']
             auto_match = form.cleaned_data['auto_match']
-            requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).select_related('requests_status', 'item_type').all()
+            requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).select_related(
+                'requests_status', 'item_type').all()
             sorted_requests = alg(requests_list, auto_match, area, donation_type, item_type)
             return render(request, 'request_list.html', {'requests': sorted_requests, 'form': form})
     else:
@@ -111,6 +114,32 @@ def new_donation(request):
 
 
 @login_required()
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST)
+        if form.is_valid():
+            # Assuming you have a User model, update the user details here
+            request.user.first_name = form.cleaned_data['first_name']
+            request.user.last_name = form.cleaned_data['last_name']
+            request.user.phone = form.cleaned_data['phone']
+            request.user.email = form.cleaned_data['email']
+            request.user.save()
+            flag = True
+            #
+            messages.success(request, 'User information updated successfully.')
+            return redirect('Dashboard')
+
+    form = EditProfileForm(initial={
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'phone': request.user.phone,
+        'email': request.user.email,
+    })
+
+    return render(request, 'edit_profile.html', {'form': form})
+
+
+@login_required()
 def api(request):
     return render(request, 'api.html')
 
@@ -118,7 +147,7 @@ def api(request):
 @login_required()
 def edit_user(request):
     if request.method == 'POST':
-        form = EditForm(request.POST)
+        form = EditProfileForm(request.POST)
         if form.is_valid():
             # Assuming you have a User model, update the user details here
             request.user.first_name = form.cleaned_data['first_name']
@@ -131,7 +160,7 @@ def edit_user(request):
             return redirect('dashboard')
 
         else:
-            form = EditForm(initial={
+            form = EditProfileForm(initial={
                 'first_name': request.user.first_name,
                 'last_name': request.user.last_name,
                 'phone': request.user.phone,
@@ -139,4 +168,3 @@ def edit_user(request):
             })
 
         return render(request, 'edit_user.html', {'form': form})
-

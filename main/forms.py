@@ -34,7 +34,7 @@ class DonationForm(forms.Form):
     auto_match = forms.BooleanField(required=False, label="Auto match")
 
 
-class EditForm(forms.Form):
+class EditProfileForm(forms.Form):
     first_name = forms.CharField(max_length=45, required=True)
     last_name = forms.CharField(max_length=45, required=True)
     phone = forms.CharField(max_length=45, required=True)
