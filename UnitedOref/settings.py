@@ -20,14 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = os.environ.get('SECRET_KEY')
-SECRET_KEY = 'django-insecure-u_h7)lyy+=jbcl6*nr@%s3v+l-fq=6zq137-ak#twur31!2j5!'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+# SECRET_KEY = 'django-insecure-u_h7)lyy+=jbcl6*nr@%s3v+l-fq=6zq137-ak#twur31!2j5!'
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.environ.get("DEBUG", "False").lower() == 'true'
-DEBUG = os.environ.get("DEBUG", "True").lower() == 'true'
+DEBUG = os.environ.get("DEBUG", "False").lower() == 'true'
+# DEBUG = os.environ.get("DEBUG", "True").lower() == 'true'
 
-# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(' ')
-ALLOWED_HOSTS=[]
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(' ')
+# ALLOWED_HOSTS=[]
 
 # Application definition
 
@@ -83,33 +83,26 @@ WSGI_APPLICATION = 'UnitedOref.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': os.environ.get('DB_NAME'),
-#         'USER': os.environ.get('DB_USER'),
-#         'PASSWORD': os.environ.get('DB_PASS'),
-#         'HOST': os.environ.get('DB_HOST'),
-#         'PORT': os.environ.get('DB_PORT')
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'defaultdb',
-        'USER': 'avnadmin',
-        'PASSWORD': 'AVNS_51BqNZkvLTxVAcLQw43',
-        'HOST': 'mysql-1f3516e5-unitedoref-c774.a.aivencloud.com',
-        'PORT': '18083'
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT')
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'defaultdb',
+#         'USER': 'avnadmin',
+#         'PASSWORD': 'AVNS_51BqNZkvLTxVAcLQw43',
+#         'HOST': 'mysql-1f3516e5-unitedoref-c774.a.aivencloud.com',
+#         'PORT': '18083'
+#     }
+# }
 
 
 # Password validation
