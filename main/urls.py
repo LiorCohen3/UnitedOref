@@ -9,5 +9,6 @@ urlpatterns = [
     path('donation/', views.new_donation),
     path('', views.donation_form, name='Donation Form'),
     path('match/', views.alg_result, name='alg_result'),
+    path('dashboard/', views.edit_user, name='edit_user'),
     path('api/', views.api, name='api')
 ]

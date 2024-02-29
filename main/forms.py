@@ -1,6 +1,5 @@
 from django import forms
 
-
 class DonationForm(forms.Form):
     AREA_CHOICES = [
         ('North', 'North'),
@@ -33,3 +32,10 @@ class DonationForm(forms.Form):
     donation_type = forms.ChoiceField(choices=DONATION_TYPE)
     count = forms.IntegerField()
     auto_match = forms.BooleanField(required=False, label="Auto match")
+
+
+class EditForm(forms.Form):
+    first_name = forms.CharField(max_length=45, required=True)
+    last_name = forms.CharField(max_length=45, required=True)
+    phone = forms.CharField(max_length=45, required=True)
+    email = forms.EmailField(max_length=254, required=True)

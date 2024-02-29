@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .forms import DonationForm
+from .forms import EditForm
 from .request import RequestStatusId
 from .algorithm import alg
 from .models import requests
@@ -101,7 +102,7 @@ def pending(request):
 
 @login_required()
 def request_list(request):
-    return render(request, 'requesrList.html')
+    return render(request, 'requestList.html')
 
 
 @login_required()
@@ -109,5 +110,33 @@ def new_donation(request):
     return render(request, 'NewDonation.html')
 
 
+@login_required()
 def api(request):
     return render(request, 'api.html')
+
+
+@login_required()
+def edit_user(request):
+    if request.method == 'POST':
+        form = EditForm(request.POST)
+        if form.is_valid():
+            # Assuming you have a User model, update the user details here
+            request.user.first_name = form.cleaned_data['first_name']
+            request.user.last_name = form.cleaned_data['last_name']
+            request.user.phone = form.cleaned_data['phone']
+            request.user.email = form.cleaned_data['email']
+            request.user.save()
+
+            messages.success(request, 'User information updated successfully.')
+            return redirect('dashboard')
+
+        else:
+            form = EditForm(initial={
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'phone': request.user.phone,
+                'email': request.user.email,
+            })
+
+        return render(request, 'edit_user.html', {'form': form})
+
