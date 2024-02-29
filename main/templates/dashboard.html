@@ -18,7 +18,7 @@
 {% if messages %}
     <ul class="messages">
         {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
         {% endfor %}
     </ul>
 {% endif %}
@@ -88,6 +88,7 @@
 </div>
 
 <a href="{% url 'Donation Type' %}" class="btn btn-primary">Make a Donation!</a>
+<a href="{% url 'Request Form' %}" class="btn btn-primary">Make a Request</a>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .forms import DonationForm
 from .forms import EditProfileForm
+from .forms import NewRequest
 from .request import RequestStatusId
 from .algorithm import alg
 from .models import requests
@@ -173,3 +174,21 @@ def edit_user(request):
             })
 
         return render(request, 'edit_user.html', {'form': form})
+
+@login_required()
+def request_form(request):
+    return render(request, 'request_form.html')
+
+
+@login_required()
+def request_form(request):
+    if request.method == 'POST':
+        form = NewRequest(request.POST)
+        if form.is_valid():
+            item_name = form.cleaned_data['item_name']
+            item_type = form.cleaned_data['item_type']
+            requests.objects.create(item_name=item_name, item_type=item_type)
+            return render(request, 'request_form.html', {'form': form})
+    else:
+        form = NewRequest()
+        return render(request, 'request_form.html', {'form': form})

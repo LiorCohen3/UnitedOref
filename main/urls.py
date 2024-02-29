@@ -12,5 +12,7 @@ urlpatterns = [
     path('edit_profile/', views.edit_profile, name='Edit Profile'),
     path('match/', views.alg_result, name='alg_result'),
     path('dashboard/', views.edit_user, name='edit_user'),
-    path('api/', views.api, name='api')
+    path('api/', views.api, name='api'),
+    path('request/', views.request_form, name='Request Form')
+
 ]
