@@ -40,7 +40,8 @@ def alg_result(request):
             item_type = form.cleaned_data['item_type']
             donation_type = form.cleaned_data['donation_type']
             count = form.cleaned_data['count']
-            requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).select_related('requests_status', 'item_type').all()
+            requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).select_related(
+                'requests_status', 'item_type').all()
             if not requests_list:
                 messages.info(request, 'Good news! There are currently no open requests.')
                 return redirect('Dashboard')
@@ -54,8 +55,8 @@ def alg_result(request):
 @login_required()
 def dashboard(request):
     requests_pending_list = requests.objects.filter(
-        Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value))[:5]
-    requests_done_list = requests.objects.filter(requests_status=RequestStatusId.DONE.value)[:5]
+        Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value)).order_by('-date')[:5]
+    requests_done_list = requests.objects.filter(requests_status=RequestStatusId.DONE.value).order_by('-date')[:5]
     profile = CustomUser.objects.get(id=request.user.id)
     unit = unit_img.objects.get(unit_name=profile.unit)
 
@@ -102,8 +103,8 @@ def pending(request):
         Q(donate_user=request.user.id) | Q(requestor=request.user.id),
         Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value)
     )
-
-    return render(request, 'pending.html', {'pending_list': pending_list})
+    user_id = request.user.id
+    return render(request, 'pending.html', {'pending_list': pending_list, "user_id": user_id})
 
 
 @login_required()
@@ -171,6 +172,7 @@ def edit_user(request):
             })
 
         return render(request, 'edit_user.html', {'form': form})
+
 
 @login_required()
 def request_form(request):
