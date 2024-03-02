@@ -22,16 +22,30 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
+                    <div class="d-flex justify-content-end"><i class="bi bi-pencil-square"></i></div>
+
                     <p class="card-text">Status: {{ request.requests_status.request_status_name }}</p>
-                    <p class="card-text">Donor: {{ request.donate_user.first_name }} {{ request.donate_user.last_name }}</p>
-                    <p class="card-text">Requester: {{ request.requestor.first_name }} {{ request.requestor.last_name }}</p>
-                    <p class="card-text">Location: {{ request.area }} (Lat: {{ request.location_lat }}, Long: {{ request.location_long }})</p>
+                    <p class="card-text">Donor: {{ request.donate_user.first_name }} {{ request.donate_user.last_name
+                        }}</p>
+                    <p class="card-text">Requester: {{ request.requestor.first_name }} {{ request.requestor.last_name
+                        }}</p>
+                    <p class="card-text">Location: {{ request.area }} (Lat: {{ request.location_lat }}, Long: {{
+                        request.location_long }})</p>
                     <p class="card-text">Information: {{ request.info }}</p>
                     <p class="card-text">Type: {% if request.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
                     <p class="card-text">Item Type: {{ request.item_type.description }}</p>
                     <p class="card-text">Unit: {{ request.unit }}</p>
                     <p class="card-text">Date and Time: {{ request.date }} {{ request.time }}</p>
-                    <p class="card-text">Schedule Date and Time: {{ request.schedule_date }} {{ request.schedule_time }}</p>
+                    <p class="card-text">Schedule Date and Time: {{ request.schedule_date }} {{ request.schedule_time
+                        }}</p>
+                </div>
+                <div class="d-flex justify-content-evenly mb-2">
+                    {% if request.requests_status.request_status_name == "Not Delivered" and request.requestor_id == user_id %}
+                    <button type="button" class="btn btn-outline-success"  onclick="window.location.href='/main/pending?confirm={{request.requests_id}}'"><i class="bi bi-check-lg"></i></i></button>
+                    {% endif %}
+
+
+                    <button type="button" class="btn btn-outline-danger"  onclick="window.location.href='/main/pending?del={{request.requests_id}}'"><i class="bi bi-trash3"></i></button>
                 </div>
             </div>
         </div>
