@@ -22,7 +22,6 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <p class="card-title">Request ID: {{ request.requests_id }}</p>
                     <p class="card-text">Status: {{ request.requests_status.request_status_name }}</p>
                     <p class="card-text">Donor: {{ request.donate_user.first_name }} {{ request.donate_user.last_name }}</p>
                     <p class="card-text">Requester: {{ request.requestor.first_name }} {{ request.requestor.last_name }}</p>
@@ -31,17 +30,16 @@
                     <p class="card-text">Type: {% if request.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
                     <p class="card-text">Item Type: {{ request.item_type.description }}</p>
                     <p class="card-text">Unit: {{ request.unit }}</p>
-                    <p class="card-text">Date: {{ request.date }}</p>
-                    <p class="card-text">Time: {{ request.time }}</p>
-                    <p class="card-text">Schedule Date: {{ request.schedule_date }}</p>
-                    <p class="card-text">Schedule Time: {{ request.schedule_time }}</p>
+                    <p class="card-text">Date and Time: {{ request.date }} {{ request.time }}</p>
+                    <p class="card-text">Schedule Date and Time: {{ request.schedule_date }} {{ request.schedule_time }}</p>
                 </div>
             </div>
         </div>
-            {% if forloop.counter|divisibleby:3 %}
-                </div>
-                <div class="row">
-            {% endif %}
+        {% if forloop.counter|divisibleby:3 %}
+    </div>
+    <br>
+    <div class="row">
+        {% endif %}
         {% endfor %}
     </div>
 
