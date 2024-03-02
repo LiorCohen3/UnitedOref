@@ -70,25 +70,22 @@ def history(request):
     sort_value = request.GET.get('sort_value')
     if filter_value == "donate":
         history_request = requests.objects.filter(
-            donate_user=request.user.id,
-            requests_status=RequestStatusId.DONE.value
+            donate_user_id=request.user.id,
+            requests_status_id=RequestStatusId.DONE.value
         )
         filter_history = "donate"
-
     elif filter_value == "received":
         history_request = requests.objects.filter(
-            donate_user=request.user.id,
-            requests_status=RequestStatusId.DONE.value
+            requestor_id=request.user.id,
+            requests_status_id=RequestStatusId.DONE.value
         )
         filter_history = "received"
-
     else:
         history_request = requests.objects.filter(
             Q(donate_user=request.user.id) | Q(requestor=request.user.id),
             requests_status=RequestStatusId.DONE.value
         )
         filter_history = "none"
-
     if sort_value == "sort_down":
         history_request = history_request.order_by('date')
         sort_value = "sort_down"
