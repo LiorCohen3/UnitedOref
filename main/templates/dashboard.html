@@ -14,8 +14,11 @@
 
 {% block content %}
 <br><br><br><br><br>
-<a href="{% url 'Donation Type' %}" class="btn btn-primary">Make a Donation!</a>
-<a href="{% url 'Request Form' %}" class="btn btn-primary">Make a Request</a>
+<div class="d-flex justify-content-evenly mb-2">
+    <a href="{% url 'Donation Type' %}" class="btn btn-primary">Make a Donation!</a>
+    <a href="{% url 'Request Form' %}" class="btn btn-primary">Make a Request</a>
+</div>
+
 <!--for edit profile-->
 {% if messages %}
 <ul class="messages">
@@ -31,24 +34,38 @@
         <div class="col-md-6 mb-4">
             <div class="card custom-card">
                 <div class="card-body">
-                    <img src="{% static unit.img_url %}" alt="{{ unit.unit_name }}" title="{{ unit.unit_name }}">
-                    <p class="card-text">{{ profile.first_name }} {{ profile.last_name }}</p>
-                    <p class="card-text">{{ profile.unit }}</p>
+                    <div class="row row-cols-2">
+                        <div class="col"></div>
+                        <div class="col"><img src="{% static unit.img_url %}" alt="{{ unit.unit_name }}" title="{{ unit.unit_name }}"></u></b></div>
+                    </div>
+                    <div class="container text-center">
+                        <p class="card-text">{{ profile.first_name }} {{ profile.last_name }}</p>
+                        <p class="card-text">{{ profile.unit }}</p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-6 mb-4">
             <div class="card custom-card">
                 <div class="card-body">
-                    <h5 class="card-title">Completed Requests</h5>
-                    <p class="card-text">Donor Area</p>
-                    {% if requests_done_list %}
-                    {% for done in requests_done_list %}
-                    <p class="card-text">{{ done.area }}</p>
-                    {% endfor %}
-                    {% else %}
-                    <p class="card-text">No data</p>
-                    {% endif %}
+                    <a href="{% url 'History' %}"><h5 class="card-title">Completed Requests <i
+                            class="bi bi-chevron-double-right"></i></h5></a>
+                    <div class="container text-center">
+                        <div class="row row-cols-2">
+                            <div class="col"><b><u>Donor</u></b></div>
+                            <div class="col"><b><u>Area</u></b></div>
+                            {% if requests_done_list %}
+                                {% for done in requests_done_list %}
+                                    <div class="col"></div>
+                                    <div class="col">{{ done.area }}</div>
+                                    <hr>
+                                    <hr>
+                                {% endfor %}
+                            {% else %}
+                                <div class="col">No data</div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -57,20 +74,32 @@
         <div class="col-md-6 mb-4">
             <div class="card custom-card">
                 <div class="card-body">
-                    <p class="card-text">Full Name {{ profile.first_name }} {{ profile.last_name }}</p>
-                    <p class="card-text">Email {{ profile.email }}</p>
-                    <p class="card-text">Phone {{ profile.phone }}</p>
-                    <p class="card-text">Unit {{ profile.unit }}</p>
-
+                    <div class="d-flex justify-content-end">
+                        <a href="{% url 'Edit Profile' %}" style="color: white; text-decoration: none;"><i class="bi bi-pencil-square"></i></a>
+                    </div>
+                    <div class="container text-center">
+                        <div class="row row-cols-2">
+                            <div class="col"><b>Full Name</b></div>
+                            <div class="col">{{ profile.first_name }} {{ profile.last_name }}</div>
+                            <hr>
+                            <hr>
+                            <div class="col"><b>Email</b></div>
+                            <div class="col">{{ profile.email }}</div>
+                            <hr>
+                            <hr>
+                            <div class="col"><b>Phone</b></div>
+                            <div class="col">{{ profile.phone }}</div>
+                            <hr>
+                            <hr>
+                            <div class="col"><b>Unit</b></div>
+                            <div class="col">{{ profile.unit }}</div>
+                        </div>
+                    </div>
                     <!-- Button trigger modal -->
                     <!--                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
                     <!--                        Edit-->
                     <!--                    </button>-->
                     <!--                    <a href="{% url 'Edit Profile' %}" class="btn btn-primary orange">Edit profile</a>-->
-                    <div class="btn btn-warning ">
-                        <a href="{% url 'Edit Profile' %}" style="color: white; text-decoration: none;">Edit profile</a>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -79,15 +108,22 @@
                 <div class="card-body">
                     <a href="{% url 'Pending' %}"><h5 class="card-title">Pending Requests <i
                             class="bi bi-chevron-double-right"></i></h5></a>
-
-                    <p class="card-text">Donor Area</p>
-                    {% if requests_pending_list %}
-                    {% for pending in requests_pending_list %}
-                    <p class="card-text">{{ pending.date }} {{ pending.area }}</p>
-                    {% endfor %}
-                    {% else %}
-                    <p class="card-text">No data</p>
-                    {% endif %}
+                    <div class="container text-center">
+                        <div class="row row-cols-2">
+                            <div class="col"><b><u>Date</u></b></div>
+                            <div class="col"><b><u>Area</u></b></div>
+                            {% if requests_pending_list %}
+                                {% for pending in requests_pending_list %}
+                                    <div class="col">{{ pending.date }}</div>
+                                    <div class="col">{{ pending.area }}</div>
+                                    <hr>
+                                    <hr>
+                                {% endfor %}
+                            {% else %}
+                                <div class="col">No data</div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
