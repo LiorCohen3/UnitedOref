@@ -14,13 +14,15 @@
 
 {% block content %}
 <br><br><br><br><br>
+<a href="{% url 'Donation Type' %}" class="btn btn-primary">Make a Donation!</a>
+<a href="{% url 'Request Form' %}" class="btn btn-primary">Make a Request</a>
 <!--for edit profile-->
 {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
+<ul class="messages">
+    {% for message in messages %}
+    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
 
 <!--end edit profile-->
@@ -64,7 +66,10 @@
                     <!--                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">-->
                     <!--                        Edit-->
                     <!--                    </button>-->
-                    <a href="{% url 'Edit Profile' %}" class="btn btn-primary">Edit profile</a>
+                    <!--                    <a href="{% url 'Edit Profile' %}" class="btn btn-primary orange">Edit profile</a>-->
+                    <div class="btn btn-warning ">
+                        <a href="{% url 'Edit Profile' %}" style="color: white; text-decoration: none;">Edit profile</a>
+                    </div>
 
                 </div>
             </div>
@@ -72,7 +77,9 @@
         <div class="col-md-6 mb-4">
             <div class="card custom-card">
                 <div class="card-body">
-                    <h5 class="card-title">Pending Requests</h5>
+                    <a href="{% url 'Pending' %}"><h5 class="card-title">Pending Requests <i
+                            class="bi bi-chevron-double-right"></i></h5></a>
+
                     <p class="card-text">Donor Area</p>
                     {% if requests_pending_list %}
                     {% for pending in requests_pending_list %}
@@ -87,8 +94,7 @@
     </div>
 </div>
 
-<a href="{% url 'Donation Type' %}" class="btn btn-primary">Make a Donation!</a>
-<a href="{% url 'Request Form' %}" class="btn btn-primary">Make a Request</a>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
