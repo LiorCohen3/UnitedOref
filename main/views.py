@@ -12,6 +12,7 @@ from .algorithm import alg
 from .models import requests
 from .models import CustomUser
 from .models import unit_img
+from .models import item_type
 
 
 @login_required()
@@ -185,8 +186,11 @@ def request_form(request):
         form = NewRequest(request.POST)
         if form.is_valid():
             item_name = form.cleaned_data['item_name']
-            item_type = form.cleaned_data['item_type']
-            requests.objects.create(item_name=item_name, item_type=item_type)
+            area = form.cleaned_data['area']
+            info = form.cleaned_data['info']
+            item_quantity = form.cleaned_data['item_quantity']
+            requestor = request.user
+            requests.objects.create(item_name=item_name, area=area, info=info, item_quantity=item_quantity, requestor=requestor)
             return render(request, 'request_form.html', {'form': form})
     else:
         form = NewRequest()
