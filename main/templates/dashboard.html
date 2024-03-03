@@ -31,12 +31,17 @@
 <!--end edit profile-->
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-6 mb-4">
+        <div class="col-md-5 mb-4">
             <div class="card custom-card">
                 <div class="card-body">
                     <div class="row row-cols-2">
-                        <div class="col"></div>
-                        <div class="col"><img src="{% static unit.img_url %}" alt="{{ unit.unit_name }}" title="{{ unit.unit_name }}"></u></b></div>
+                        <div class="col d-flex justify-content-center align-items-center px-auto py-auto">
+                            <img src="{% static user.img %}" style="max-width: 141px; max-height: 198px;">
+                        </div>
+
+                        <div class="col d-flex justify-content-center align-items-center px-auto py-auto">
+                            <img src="{% static unit.img_url %}" alt="{{ unit.unit_name }}" title="{{ unit.unit_name }}"></u></b>
+                        </div>
                     </div>
                     <div class="container text-center">
                         <p class="card-text">{{ profile.first_name }} {{ profile.last_name }}</p>
@@ -45,24 +50,29 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-4">
+        <div class="col-md-5 mb-4">
             <div class="card custom-card">
                 <div class="card-body">
-                    <a href="{% url 'History' %}"><h5 class="card-title">Completed Requests <i
-                            class="bi bi-chevron-double-right"></i></h5></a>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'History' %}"><h5 class="card-title">Completed Requests </h5></a><a
+                            href="{% url 'History' %}"><i class="bi bi-box-arrow-up-right "></i></a>
+                    </div>
                     <div class="container text-center">
                         <div class="row row-cols-2">
-                            <div class="col"><b><u>Donor</u></b></div>
-                            <div class="col"><b><u>Area</u></b></div>
+                            <div class="col"><b>Donor</b></div>
+                            <div class="col"><b>Area</b></div>
                             {% if requests_done_list %}
-                                {% for done in requests_done_list %}
-                                    <div class="col"></div>
-                                    <div class="col">{{ done.area }}</div>
-                                    <hr>
-                                    <hr>
-                                {% endfor %}
+                            {% for done in requests_done_list %}
+                            <div class="col"></div>
+                            <div class="col">{{ done.area }}</div>
+                            {% if forloop.counter < 5 %}
+                            <hr>
+                            <hr>
+                            {% endif %}
+
+                            {% endfor %}
                             {% else %}
-                                <div class="col">No data</div>
+                            <div class="col">No data</div>
                             {% endif %}
                         </div>
                     </div>
@@ -71,28 +81,28 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 mb-4">
+        <div class="col-md-5 mb-4">
             <div class="card custom-card">
                 <div class="card-body">
                     <div class="d-flex justify-content-end">
-                        <a href="{% url 'Edit Profile' %}" style="color: white; text-decoration: none;"><i class="bi bi-pencil-square"></i></a>
+                        <a href="{% url 'Edit Profile' %}"><i class="bi bi-pencil-square"></i></a>
                     </div>
                     <div class="container text-center">
-                        <div class="row row-cols-2">
-                            <div class="col"><b>Full Name</b></div>
-                            <div class="col">{{ profile.first_name }} {{ profile.last_name }}</div>
+                        <div class="row row-cols-2 ">
+                            <div class="col text-start"><b>Full Name</b></div>
+                            <div class="col text-end">{{ profile.first_name }} {{ profile.last_name }}</div>
                             <hr>
                             <hr>
-                            <div class="col"><b>Email</b></div>
-                            <div class="col">{{ profile.email }}</div>
+                            <div class="col text-start"><b>Email</b></div>
+                            <div class="col text-end">{{ profile.email }}</div>
                             <hr>
                             <hr>
-                            <div class="col"><b>Phone</b></div>
-                            <div class="col">{{ profile.phone }}</div>
+                            <div class="col text-start"><b>Phone</b></div>
+                            <div class="col text-end">{{ profile.phone }}</div>
                             <hr>
                             <hr>
-                            <div class="col"><b>Unit</b></div>
-                            <div class="col">{{ profile.unit }}</div>
+                            <div class="col text-start"><b>Unit</b></div>
+                            <div class="col text-end">{{ profile.unit }}</div>
                         </div>
                     </div>
                     <!-- Button trigger modal -->
@@ -103,24 +113,28 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-4">
+        <div class="col-md-5 mb-4">
             <div class="card custom-card">
                 <div class="card-body">
-                    <a href="{% url 'Pending' %}"><h5 class="card-title">Pending Requests <i
-                            class="bi bi-chevron-double-right"></i></h5></a>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'Pending' %}"><h5 class="card-title">Pending Requests </h5></a><a
+                            href="{% url 'Pending' %}"><i class="bi bi-box-arrow-up-right "></i></a>
+                    </div>
                     <div class="container text-center">
                         <div class="row row-cols-2">
-                            <div class="col"><b><u>Date</u></b></div>
-                            <div class="col"><b><u>Area</u></b></div>
+                            <div class="col"><b>Date</b></div>
+                            <div class="col"><b>Area</b></div>
                             {% if requests_pending_list %}
-                                {% for pending in requests_pending_list %}
-                                    <div class="col">{{ pending.date }}</div>
-                                    <div class="col">{{ pending.area }}</div>
-                                    <hr>
-                                    <hr>
-                                {% endfor %}
+                            {% for pending in requests_pending_list %}
+                            <div class="col">{{ pending.date }}</div>
+                            <div class="col">{{ pending.area }}</div>
+                            {% if forloop.counter < 5 %}
+                            <hr>
+                            <hr>
+                            {% endif %}
+                            {% endfor %}
                             {% else %}
-                                <div class="col">No data</div>
+                            <div class="col">No data</div>
                             {% endif %}
                         </div>
                     </div>

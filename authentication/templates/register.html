@@ -1,12 +1,20 @@
 {% extends 'auth_base.html' %}
-
+{% load static %}
 {% block title %}Register{% endblock %}
 
 {% block content %}
+<img src="{% static 'images/logo2.png' %}" style="max-width: 300px; max-height: 250px; display: block; margin: auto; margin-bottom: 3px;">
+
 <h2>Register</h2>
+
 <form method="post" id="frm">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Register</button>
+    <div class="row justify-content-end">
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary" style="background-color: #FF914E;">Register</button>
+    </div>
+</div>
+
 </form>
 {% endblock %}

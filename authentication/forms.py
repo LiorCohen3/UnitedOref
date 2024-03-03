@@ -6,14 +6,14 @@ from main.models import CustomUser
 class CustomUserForm(UserCreationForm):
     phone = forms.CharField(max_length=45, required=True)
     real_id = forms.CharField(max_length=45, required=True)
-    unit = forms.CharField(max_length=45, required=True)
+    # unit = forms.CharField(max_length=45, required=True)
     first_name = forms.CharField(max_length=45, required=True)
     last_name = forms.CharField(max_length=45, required=True)
     email = forms.EmailField(max_length=254, required=True)
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'phone', 'real_id', 'unit']
+        fields = ['username', 'password1', 'password2', 'first_name', 'last_name', 'email', 'phone', 'real_id']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
