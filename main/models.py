@@ -5,8 +5,8 @@ from django.db import models
 class CustomUser(AbstractUser):
     phone = models.CharField(max_length=45, null=False)
     real_id = models.CharField(max_length=45, null=False)
-    unit = models.CharField(max_length=45, null=True)
-    img = models.CharField(max_length=45, null=True)
+    unit = models.CharField(max_length=45, null=True, default="UnitedOref")
+    img = models.CharField(max_length=45, null=True, default="images/profile_img/default.png")
 
     class Meta:
         db_table = 'user'
@@ -30,8 +30,8 @@ class request_status(models.Model):
 
 class requests(models.Model):
     requests_id = models.AutoField(primary_key=True)
-    requests_status = models.ForeignKey(request_status, on_delete=models.CASCADE)
-    donate_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='donations')
+    requests_status = models.ForeignKey(request_status, on_delete=models.CASCADE, default=2)
+    donate_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='donations', default=1)
     requestor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='requestor')
     location_lat = models.FloatField(default=None, null=True)
     location_long = models.FloatField(default=None, null=True)

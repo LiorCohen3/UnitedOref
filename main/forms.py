@@ -1,4 +1,6 @@
 from django import forms
+from django.db import models
+from .models import item_type
 
 class DonationForm(forms.Form):
     AREA_CHOICES = [
@@ -41,5 +43,27 @@ class EditProfileForm(forms.Form):
 
 
 class NewRequest(forms.Form):
-    item_name = forms.CharField(max_length=45, required=True)
-    item_type = forms.CharField(max_length=45, required=True)
+
+    AREA_CHOICES = [
+        ('North', 'North'),
+        ('Center', 'Center'),
+        ('South', 'South'),
+    ]
+
+    all_objects = item_type.objects.values('description')
+    item_name = forms.ChoiceField(choices=[(obj['description'], obj['description']) for obj in all_objects])
+
+    area = forms.ChoiceField(choices=AREA_CHOICES)
+    info = forms.CharField(max_length=45, required=True)
+    item_quantity = forms.IntegerField(required=True)
+    requestor = forms.IntegerField(required=True)
+    #main_item_type = item_type.objects.values('description', 'item_type').get(description=selected_description)
+    #item_type = main_item_type['item_type']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Exclude 'requestor' field from the form
+        if 'requestor' in self.fields:
+            del self.fields['requestor']
+            del self.fields['item_type']
