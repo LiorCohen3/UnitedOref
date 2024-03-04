@@ -71,3 +71,7 @@ class NewRequest(forms.Form):
 class LocationForm(forms.Form):
     location_lat = forms.CharField(widget=forms.HiddenInput)
     location_long = forms.CharField(widget=forms.HiddenInput)
+    schedule_date = forms.DateField(required=True,
+                                    widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+    schedule_time = forms.TimeField(required=True,
+                                    widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}))
