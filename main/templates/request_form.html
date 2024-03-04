@@ -1,32 +1,38 @@
 {% extends 'base_template.html' %}
 {% load static %}
 {% block extra_head %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 {% endblock %}
 {% block title %}Request Form{% endblock %}
 
 {% block menu_item2 %}
-<li class="selected menu"><a href="{% url 'Dashboard' %}"><img src="{% static 'images/dashboard_fill.svg' %}" alt="Dashboard">Dashboard</a></li>
+<li class="selected menu"><a href="{% url 'Dashboard' %}"><img src="{% static 'images/dashboard_fill.svg' %}"
+                                                               alt="Dashboard">Dashboard</a></li>
 {% endblock %}
 
 {% block content %}
-    <br><br><br><br><br>
-    <div class="container">
-        <h1 class="text-center mb-4">New Request</h1>
-        <div class="justify-content-center">
-            <div class="col-md-6 mb-4 mx-auto">
-                <div class="card">
-                    <div class="card-body">
-                        <form method="post" action="{% url 'Request Form' %}">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
+<br><br><br><br><br>
+<div class="container">
+    <h1 class="text-center mb-4">New Request</h1>
+    <div class="justify-content-center">
+        <div class="col-md-6 mb-4 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" action="{% url 'Request Form' %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="row justify-content-end">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary" style="background-color: #FF914E;">Submit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

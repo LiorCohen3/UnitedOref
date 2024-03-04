@@ -238,8 +238,11 @@ def request_form(request):
             info = form.cleaned_data['info']
             item_quantity = form.cleaned_data['item_quantity']
             requestor = request.user
+            unit = request.user.unit
             main_item_type = item_type.objects.values('description', 'item_type_id').get(description='Warm food')
-            created_object = requests.objects.create(item_name=item_name, area=area, info=info, item_quantity=item_quantity, requestor=requestor, item_type_id=main_item_type['item_type_id'])
+            created_object = requests.objects.create(item_name=item_name, area=area, info=info,
+                                                     item_quantity=item_quantity, requestor=requestor,
+                                                     item_type_id=main_item_type['item_type_id'], unit=unit)
             render(request, 'request_form.html', {'form': form})
             this_id = created_object.requests_id
             return redirect('Location Form', id=this_id)
@@ -258,6 +261,8 @@ def location_form(request, id):
             lng = form.cleaned_data['location_long']
             location_obj.location_lat = lat
             location_obj.location_long = lng
+            location_obj.schedule_date = form.cleaned_data['schedule_date']
+            location_obj.schedule_time = form.cleaned_data['schedule_time']
             location_obj.save()
             return redirect('Dashboard')
     else:

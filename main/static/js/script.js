@@ -76,8 +76,8 @@ function geocode(request) {
       map.setCenter(results[0].geometry.location);
       marker.setPosition(results[0].geometry.location);
       marker.setMap(map);
-      document.getElementById('lat').value = String(results[0].geometry.location.lat());
-      document.getElementById('long').value = String(results[0].geometry.location.lng());
+      document.getElementById('id_location_lat').value = String(results[0].geometry.location.lat());
+      document.getElementById('id_location_long').value = String(results[0].geometry.location.lng());
       return results;
     })
     .catch((e) => {
