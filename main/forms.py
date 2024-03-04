@@ -2,6 +2,7 @@ from django import forms
 from django.db import models
 from .models import item_type
 
+
 class DonationForm(forms.Form):
     AREA_CHOICES = [
         ('North', 'North'),
@@ -43,7 +44,6 @@ class EditProfileForm(forms.Form):
 
 
 class NewRequest(forms.Form):
-
     AREA_CHOICES = [
         ('North', 'North'),
         ('Center', 'Center'),
@@ -57,8 +57,7 @@ class NewRequest(forms.Form):
     info = forms.CharField(max_length=45, required=True)
     item_quantity = forms.IntegerField(required=True)
     requestor = forms.IntegerField(required=True)
-    #main_item_type = item_type.objects.values('description', 'item_type').get(description=selected_description)
-    #item_type = main_item_type['item_type']
+    item_type = forms.CharField(required=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -67,3 +66,8 @@ class NewRequest(forms.Form):
         if 'requestor' in self.fields:
             del self.fields['requestor']
             del self.fields['item_type']
+
+
+class LocationForm(forms.Form):
+    location_lat = forms.CharField(widget=forms.HiddenInput)
+    location_long = forms.CharField(widget=forms.HiddenInput)
