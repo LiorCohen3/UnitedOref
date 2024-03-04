@@ -14,8 +14,7 @@ from .models import requests
 from .models import item_type
 from .models import CustomUser
 from .models import unit_img
-from .models import item_type
-from django.http import JsonResponse
+import os
 
 
 @login_required()
@@ -245,7 +244,8 @@ def request_form(request):
                                                      item_type_id=main_item_type['item_type_id'], unit=unit)
             render(request, 'request_form.html', {'form': form})
             this_id = created_object.requests_id
-            return redirect('Location Form', id=this_id)
+            g_api = os.environ.get("GOOGLE_API")
+            return redirect('Location Form', {'g_api': g_api}, id=this_id)
     else:
         form = NewRequest()
         return render(request, 'request_form.html', {'form': form})
