@@ -244,8 +244,7 @@ def request_form(request):
                                                      item_type_id=main_item_type['item_type_id'], unit=unit)
             render(request, 'request_form.html', {'form': form})
             this_id = created_object.requests_id
-            g_api = os.environ.get("GOOGLE_API")
-            return redirect('Location Form', {'g_api': g_api}, id=this_id)
+            return redirect('Location Form', id=this_id)
     else:
         form = NewRequest()
         return render(request, 'request_form.html', {'form': form})
@@ -253,6 +252,7 @@ def request_form(request):
 
 @login_required()
 def location_form(request, id):
+    g_api = os.environ.get("GOOGLE_API")
     location_obj = get_object_or_404(requests, requests_id=id)
     if request.method == 'POST':
         form = LocationForm(request.POST)
@@ -268,4 +268,4 @@ def location_form(request, id):
     else:
         print("else")
         form = LocationForm()
-    return render(request, 'location_form.html', {'form': form})
+    return render(request, 'location_form.html', {'form': form, 'g_api': g_api})
