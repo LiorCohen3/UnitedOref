@@ -1,12 +1,17 @@
 {% extends 'auth_base.html' %}
-
+{% load static %}
 {% block title %}Logout{% endblock %}
 
 {% block content %}
-<h2>Logout</h2>
-<p>Are you sure you want to logout?</p>
-<form action="{% url 'logout' %}" method="post" id="frm">
+<img src="{% static 'images/logo2.png' %}" style="max-width: 300px; max-height: 250px; display: block; margin: auto; margin-bottom: 3px;">
+
+<p>Logged out successfully</p>
+<form action="{% url 'Dashboard' %}" method="post" id="frm">
     {% csrf_token %}
-    <button type="submit" class="btn btn-primary">Logout</button>
+    <div class="row justify-content-center">
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary" style="background-color: #FF914E;">Login</button>
+    </div>
+</div>
 </form>
 {% endblock %}

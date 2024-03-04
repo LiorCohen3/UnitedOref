@@ -31,6 +31,10 @@
                 <li class="menu"><a href="{% url 'Pending' %}"><img src="{% static 'images/hourglass.png' %}" alt="Pending Requests">Pending Requests</a></li>
                 {% endblock %}
             </ul>
+            <form class="logout" action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn"><i class="bi bi-box-arrow-right" style="font-size: 47px;"></i></button>
+            </form>
         </nav>
     </header>
 

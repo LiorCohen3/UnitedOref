@@ -230,6 +230,12 @@ nav img {
     margin-left: 5px;
 }
 
+.logout {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+}
+
 .bi-sort-down,
 .bi-sort-up {
     background: none;
