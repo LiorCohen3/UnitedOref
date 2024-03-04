@@ -8,6 +8,7 @@ urlpatterns = [
     path('pending/', views.pending, name='Pending'),
     path('donate/', views.donation_form, name='Donation Form'),
     path('method/', views.donation_type, name='Donation Type'),
+    path('manual/', views.manual_donation, name='Manual Donation'),
     path('pending/', views.pending, name='Pending'),
     path('edit_profile/', views.edit_profile, name='Edit Profile'),
     path('match/', views.alg_result, name='alg_result'),

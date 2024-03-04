@@ -226,6 +226,10 @@ nav img {
     align-items: center;
 }
 
+.margin-left-5 {
+    margin-left: 5px;
+}
+
 .bi-sort-down,
 .bi-sort-up {
     background: none;

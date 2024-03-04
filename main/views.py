@@ -10,6 +10,7 @@ from .forms import NewRequest
 from .request import RequestStatusId
 from .algorithm import alg
 from .models import requests
+from .models import item_type
 from .models import CustomUser
 from .models import unit_img
 from .models import item_type
@@ -23,13 +24,57 @@ def donation_form(request):
 
 @login_required()
 def donation_type(request):
-    if request.method == 'POST':
-        option = request.POST.get('option')
-        if option == 'option1':
-            return redirect('Donation Form')
-        elif option == 'option2':
-            return redirect('Manual Donation')
     return render(request, 'donation_type.html')
+
+
+@login_required()
+def manual_donation(request, item_types=None):
+    sort_value = request.GET.get('sort_value')
+    sort_direction = request.GET.get('sort_direction', 'down')
+    filters = request.GET.getlist('filter')  # Get multiple filter values if provided
+
+    areas = ['North', 'Center', 'South']
+    type_names = ['Equipment', 'Food']
+    item_types_list = ['Warm Food', 'Dry Food', 'Snacks', 'Winter Clothing', 'Summer Clothing', 'Underwear', 'Socks',
+                       'Tactical Vests', 'Tactical Gloves', 'Tactical Uniform', 'Tactical Boots', 'Tactical Protection',
+                       'Tactical Helmets']
+    units = ['Kfir', 'Givati', 'Golani', 'Nahal', 'Shiryon', 'Totchanim', 'Handasa Kravit', 'Tzanchanim',
+             'Arayot Hayarden', 'Bardelas', 'Karakal', 'Chilutz Vehatzala', 'Hagana Avirit', 'Chovlim Snapear',
+             'Mishmar Hagvul', 'Isuf Kravi', 'UnitedOref']
+
+    # Fetch all requests
+    requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value)
+
+    # Apply sorting
+    if sort_value == 'date':
+        requests_list = requests_list.order_by('date') if sort_direction == 'down' else requests_list.order_by('-date')
+    filtered_requests = []
+    # Apply filters
+    for filter_value in filters:
+        if "area_" in filter_value:
+            filter_value = filter_value.replace("area_", "")
+            filtered_requests += requests_list.filter(area=filter_value)  # Filter by donate area
+        elif "type_" in filter_value:
+            filter_value = filter_value.replace("type_", "")
+            don_type = 1 if filter_value == 'Food' else 2
+            filtered_requests += requests_list.filter(type_id=don_type)  # Filter by received area
+        elif "unit_" in filter_value:
+            filter_value = filter_value.replace("unit_", "")
+            filtered_requests += requests_list.filter(unit=filter_value)  # Filter by type
+        elif "item_" in filter_value:
+            filter_value = filter_value.replace("item_", "")
+            item = item_type.objects.filter(description=filter_value)
+            filtered_requests += requests_list.filter(item_type=item[0])  # Filter by item type
+
+    return render(request, 'manual_donation.html', {
+        'requests': filtered_requests or requests_list,
+        'sort_value': sort_value,
+        'filters': filters,
+        'areas': areas,
+        'type_names': type_names,
+        'item_types': item_types_list,
+        'units': units
+    })
 
 
 @login_required()
@@ -56,7 +101,8 @@ def alg_result(request):
 @login_required()
 def dashboard(request):
     requests_pending_list = requests.objects.filter(
-        Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value)).order_by('-date')[:5]
+        Q(requests_status=RequestStatusId.PENDING.value) | Q(
+            requests_status=RequestStatusId.NOT_DELIVERED.value)).order_by('-date')[:5]
     requests_done_list = requests.objects.filter(requests_status=RequestStatusId.DONE.value).order_by('-date')[:5]
     profile = CustomUser.objects.get(id=request.user.id)
     unit = unit_img.objects.get(unit_name=profile.unit)
