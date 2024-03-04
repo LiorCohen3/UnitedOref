@@ -8,21 +8,8 @@ let marker;
 let geocoder;
 let responseDiv;
 let response;
-let ourlat;
-let ourlng;
-let saveB;
 
 function initMap() {
-
-  saveB = document.getElementById("saveB");
-  saveB.addEventListener("click", () => {
-    if (ourlat == undefined)
-      console.log("must pick");
-    else
-      console.log(ourlat,ourlng);
-      //need to use those params to save
-  });
-
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 8,
     center: { lat: 31.3549176, lng: 34.243321 },
@@ -89,8 +76,8 @@ function geocode(request) {
       map.setCenter(results[0].geometry.location);
       marker.setPosition(results[0].geometry.location);
       marker.setMap(map);
-      ourlat = String(results[0].geometry.location.lat());
-      ourlng = String(results[0].geometry.location.lng());
+      document.getElementById('lat').value = String(results[0].geometry.location.lat());
+      document.getElementById('long').value = String(results[0].geometry.location.lng());
       return results;
     })
     .catch((e) => {

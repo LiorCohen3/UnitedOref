@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,6 +7,7 @@ from django.db.models import Q
 from .forms import DonationForm
 from .forms import EditProfileForm
 from .forms import NewRequest
+from .forms import LocationForm
 from .request import RequestStatusId
 from .algorithm import alg
 from .models import requests
@@ -14,6 +15,7 @@ from .models import item_type
 from .models import CustomUser
 from .models import unit_img
 from .models import item_type
+from django.http import JsonResponse
 
 
 @login_required()
@@ -191,8 +193,8 @@ def edit_profile(request):
 
 
 @login_required()
-def api(request):
-    return render(request, 'api.html')
+def location_form(request, id):
+    return render(request, 'location_form.html', {'id': id})
 
 
 @login_required()
@@ -236,8 +238,29 @@ def request_form(request):
             info = form.cleaned_data['info']
             item_quantity = form.cleaned_data['item_quantity']
             requestor = request.user
-            requests.objects.create(item_name=item_name, area=area, info=info, item_quantity=item_quantity, requestor=requestor)
-            return render(request, 'request_form.html', {'form': form})
+            main_item_type = item_type.objects.values('description', 'item_type_id').get(description='Warm food')
+            created_object = requests.objects.create(item_name=item_name, area=area, info=info, item_quantity=item_quantity, requestor=requestor, item_type_id=main_item_type['item_type_id'])
+            render(request, 'request_form.html', {'form': form})
+            this_id = created_object.requests_id
+            return redirect('Location Form', id=this_id)
     else:
         form = NewRequest()
         return render(request, 'request_form.html', {'form': form})
+
+
+@login_required()
+def location_form(request, id):
+    location_obj = get_object_or_404(requests, requests_id=id)
+    if request.method == 'POST':
+        form = LocationForm(request.POST)
+        if form.is_valid():
+            lat = form.cleaned_data['location_lat']
+            lng = form.cleaned_data['location_long']
+            location_obj.location_lat = lat
+            location_obj.location_long = lng
+            location_obj.save()
+            return redirect('Dashboard')
+    else:
+        print("else")
+        form = LocationForm()
+    return render(request, 'location_form.html', {'form': form})
