@@ -15,6 +15,8 @@ from .models import item_type
 from .models import CustomUser
 from .models import unit_img
 import os
+from .models import item_type
+from django.http import JsonResponse
 
 
 @login_required()
@@ -238,10 +240,13 @@ def request_form(request):
             item_quantity = form.cleaned_data['item_quantity']
             requestor = request.user
             unit = request.user.unit
-            main_item_type = item_type.objects.values('description', 'item_type_id').get(description='Warm food')
+            the_item_itself = item_type.objects.get(description=item_name)
+            type_id = the_item_itself.item_type_id
+            request_type = the_item_itself.request_type
             created_object = requests.objects.create(item_name=item_name, area=area, info=info,
                                                      item_quantity=item_quantity, requestor=requestor,
-                                                     item_type_id=main_item_type['item_type_id'], unit=unit)
+                                                     item_type_id=request_type, unit=unit, type_id=type_id)
+            created_object = requests.objects.create(item_name=item_name, area=area, info=info, item_quantity=item_quantity, requestor=requestor, item_type_id=request_type, type_id=type_id)
             render(request, 'request_form.html', {'form': form})
             this_id = created_object.requests_id
             return redirect('Location Form', id=this_id)
@@ -268,4 +273,4 @@ def location_form(request, id):
     else:
         print("else")
         form = LocationForm()
-    return render(request, 'location_form.html', {'form': form, 'g_api': g_api})
+        return render(request, 'location_form.html', {'form': form, 'g_api': g_api})
