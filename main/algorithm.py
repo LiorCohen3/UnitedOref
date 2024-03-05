@@ -16,7 +16,7 @@ from datetime import datetime
 # donationCap=20
 
 
-def alg(requests_list, area, item_type, count, auto_match: bool = True, donation_type=1):
+def alg(requests_list, area, item_type, count, donation_type=1):
     alg_score = {}
     current_date_time = datetime.now()
     current_year = current_date_time.year
@@ -52,8 +52,8 @@ def alg(requests_list, area, item_type, count, auto_match: bool = True, donation
 
     sorted_keys = list(sorted(alg_score, key=lambda x: alg_score[x], reverse=True))
     sorted_requests = [requests_list[i] for i in sorted_keys]
-    if auto_match:
-        return [sorted_requests[0]]  # return request with the highest score
-
+    if len(sorted_requests) < 4:
+        return sorted_requests
     else:
-        return sorted_requests  # return all the requests
+        return sorted_requests[:3]  # return request with the highest score
+

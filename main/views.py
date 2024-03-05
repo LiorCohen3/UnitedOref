@@ -14,8 +14,8 @@ from .models import requests
 from .models import item_type
 from .models import CustomUser
 from .models import unit_img
+from .models import request_status
 import os
-from .models import item_type
 from django.http import JsonResponse
 
 
@@ -31,7 +31,7 @@ def donation_type(request):
 
 
 @login_required()
-def manual_donation(request, item_types=None):
+def manual_donation(request):
     sort_value = request.GET.get('sort_value')
     sort_direction = request.GET.get('sort_direction', 'down')
     filters = request.GET.getlist('filter')  # Get multiple filter values if provided
@@ -44,9 +44,16 @@ def manual_donation(request, item_types=None):
     units = ['Kfir', 'Givati', 'Golani', 'Nahal', 'Shiryon', 'Totchanim', 'Handasa Kravit', 'Tzanchanim',
              'Arayot Hayarden', 'Bardelas', 'Karakal', 'Chilutz Vehatzala', 'Hagana Avirit', 'Chovlim Snapear',
              'Mishmar Hagvul', 'Isuf Kravi', 'UnitedOref']
-
-    # Fetch all requests
-    requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value)
+    if "/history/" in request.path:
+        requests_list = requests.objects.filter(
+            Q(donate_user=request.user.id) | Q(requestor=request.user.id),
+            requests_status=RequestStatusId.DONE.value)
+        template_name = 'history.html'
+    else:
+        # Fetch all requests where status is pending and requestor is not the current user
+        requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).exclude(
+            requestor=request.user.id).select_related('requests_status', 'item_type').all()
+        template_name = 'manual_donation.html'
 
     # Apply sorting
     if sort_value == 'date':
@@ -69,7 +76,7 @@ def manual_donation(request, item_types=None):
             item = item_type.objects.filter(description=filter_value)
             filtered_requests += requests_list.filter(item_type=item[0])  # Filter by item type
 
-    return render(request, 'manual_donation.html', {
+    return render(request, template_name, {
         'requests': filtered_requests or requests_list,
         'sort_value': sort_value,
         'filters': filters,
@@ -89,16 +96,16 @@ def alg_result(request):
             item_type = form.cleaned_data['item_type']
             donation_type = form.cleaned_data['donation_type']
             count = form.cleaned_data['count']
-            requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).select_related(
-                'requests_status', 'item_type').all()
+            requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).exclude(
+                requestor=request.user.id).select_related('requests_status', 'item_type').all()
             if not requests_list:
                 messages.info(request, 'Good news! There are currently no open requests.')
                 return redirect('Dashboard')
             sorted_requests = alg(requests_list, area, item_type, count, donation_type)
-            return render(request, 'request_list.html', {'requests': sorted_requests, 'form': form})
+            return render(request, 'auto_match.html', {'requests': sorted_requests, 'form': form})
     else:
         form = DonationForm()
-    return render(request, 'request_list.html', {'form': form})
+    return render(request, 'auto_match.html', {'form': form})
 
 
 @login_required()
@@ -113,38 +120,6 @@ def dashboard(request):
     return render(request, 'dashboard.html',
                   {'requests_pending_list': requests_pending_list, 'requests_done_list': requests_done_list,
                    'profile': profile, 'unit': unit})
-
-
-@login_required()
-def history(request):
-    filter_value = request.GET.get('filter')
-    sort_value = request.GET.get('sort_value')
-    if filter_value == "donate":
-        history_request = requests.objects.filter(
-            donate_user_id=request.user.id,
-            requests_status_id=RequestStatusId.DONE.value
-        )
-        filter_history = "donate"
-    elif filter_value == "received":
-        history_request = requests.objects.filter(
-            requestor_id=request.user.id,
-            requests_status_id=RequestStatusId.DONE.value
-        )
-        filter_history = "received"
-    else:
-        history_request = requests.objects.filter(
-            Q(donate_user=request.user.id) | Q(requestor=request.user.id),
-            requests_status=RequestStatusId.DONE.value
-        )
-        filter_history = "none"
-    if sort_value == "sort_down":
-        history_request = history_request.order_by('date')
-        sort_value = "sort_down"
-    else:
-        history_request = history_request.order_by('-date')
-        sort_value = "sort_up"
-    return render(request, 'history.html',
-                  {'history_request': history_request, 'filter_history': filter_history, 'sort_value': sort_value})
 
 
 @login_required()
@@ -271,6 +246,14 @@ def location_form(request, id):
             location_obj.save()
             return redirect('Dashboard')
     else:
-        print("else")
         form = LocationForm()
         return render(request, 'location_form.html', {'form': form, 'g_api': g_api})
+
+
+@login_required()
+def thanks(request, request_id):
+    req = requests.objects.get(requests_id=request_id)
+    req.requests_status = request_status.objects.get(request_status_id=3)
+    req.donate_user = request.user
+    req.save()
+    return render(request, 'thanks.html', {'phone': req.requestor.phone})

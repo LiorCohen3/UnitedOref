@@ -1,4 +1,5 @@
 {% extends 'base_template.html' %}
+{% load custom_filters %}
 {% load static %}
 {% block extra_head %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -18,22 +19,66 @@
 <h1 class="text-center mb-4">History</h1>
 <div class="d-flex justify-content-center gap-2 mx-auto mt-2 align-items-center">
     <button id="sortButton" class="bi bi-sort-down my-auto"></button>
-    <button class="{% if sort_value == 'date_up' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
-            onclick="window.location.href='/main/history?filter={{filter_history}}&sort_value=sort_up'">Date
-    </button>
-    <button class="{% if sort_value == 'date_down' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
-            onclick="window.location.href='/main/history?filter={{filter_history}}&sort_value=sort_down'">Date
+    <button class="{% if sort_value == 'date' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
+            onclick="window.location.href='/main/history/?{% if filters %}{% for filter in filters %}&filter={{ filter }}{% endfor %}{% endif %}&sort_value=date&sort_direction=down'">Date
     </button>
     <i class="bi bi-funnel my-auto"></i>
-    <button class="{% if filter_history == 'donate' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
-            onclick="window.location.href='/main/history?filter=donate&sort_value={{sort_value}}'">Donations
-    </button>
-    <button class="{% if filter_history == 'received' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
-            onclick="window.location.href='/main/history?filter=received&sort_value={{sort_value}}'">Requests
-    </button>
-    {% if filter_history != 'none' %}
-    <button class="btn btn-outline-danger btn-xs" onclick="window.location.href='/main/history'">x</button>
+    <div class="btn-group">
+        <button type="button" class="btn {% if filters|contains_substring:'area_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Area
+        </button>
+        <ul class="dropdown-menu">
+            {% for area in areas %}
+            <li>
+                <input class="margin-left-5" type="checkbox" id="{{ area }}" name="area" value="area_{{ area }}" {% if 'area_'|add:area in filters %}checked{% endif %}>
+                <label for="{{ area }}">{{ area }}</label>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn {% if filters|contains_substring:'type_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Type
+        </button>
+        <ul class="dropdown-menu">
+            {% for type_name in type_names %}
+            <li>
+                <input class="margin-left-5" type="checkbox" id="{{ type_name }}" name="type" value="type_{{ type_name }}" {% if 'type_'|add:type_name in filters %}checked{% endif %}>
+                <label for="{{ type_name }}">{{ type_name }}</label>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn {% if filters|contains_substring:'unit_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Unit
+        </button>
+        <ul class="dropdown-menu">
+            {% for unit_name in units %}
+            <li>
+                <input class="margin-left-5" type="checkbox" id="{{ unit_name }}" name="unit" value="unit_{{ unit_name }}" {% if 'unit_'|add:unit_name in filters %}checked{% endif %}>
+                <label for="{{ unit_name }}">{{ unit_name }}</label>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn {% if filters|contains_substring:'item_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Item Type
+        </button>
+        <ul class="dropdown-menu fit">
+            {% for item_type_name in item_types %}
+            <li>
+                <input class="margin-left-5" type="checkbox" id="{{ item_type_name }}" name="item_type" value="item_{{ item_type_name }}" {% if 'item_'|add:item_type_name in filters %}checked{% endif %}>
+                <label for="{{ item_type_name }}">{{ item_type_name }}</label>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if filters %}
+    <button class="btn btn-outline-danger btn-xs" onclick="window.location.href='/main/history{% if sort_value %}?sort_value={{ sort_value }}&sort_direction={{ sort_direction }}{% endif %}'">x</button>
     {% endif %}
+    <button class="btn btn-primary theme-color" id="applyFilterBtn">Apply </button>
 </div>
 
 

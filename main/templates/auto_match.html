@@ -1,0 +1,76 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="{% static 'js/button.js' %}"></script>
+{% endblock %}
+{% block title %}Requests List{% endblock %}
+
+{% block menu_item2 %}
+<li class="selected menu"><a href="{% url 'Dashboard' %}"><img src="{% static 'images/dashboard_fill.svg' %}" alt="Dashboard">Dashboard</a></li>
+{% endblock %}
+
+{% block content %}
+    <br><br><br><br><br>
+    <div class="container">
+        <h1 class="text-center mb-4">Matched Donation Requests</h1>
+        <div id="cardContainer1" class="justify-content-center" onclick="handleCardClickCont('cardContainer1')">
+            <div class="col-md-6 mb-4 mx-auto">
+                <h4 class="text-left">Best Match Request</h4>
+                <a href="{% url 'Thanks' request_id=requests.0.requests_id %}" class="card-link">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Request ID: {{ requests.0.requests_id }}</h5>
+                            <p class="card-text">Status: {{ requests.0.requests_status.requests.0_status_name }}</p>
+                            <p class="card-text">Requester: {{ requests.0.requestor.first_name }} {{ requests.0.requestor.last_name }}</p>
+                            <p class="card-text">Location: {{ requests.0.area }} (Lat: {{ requests.0.location_lat }}, Long: {{ requests.0.location_long }})</p>
+                            <p class="card-text">Information: {{ requests.0.info }}</p>
+                            <p class="card-text">Type: {% if requests.0.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
+                            <p class="card-text">Item Type: {{ requests.0.item_type.description }}</p>
+                            <p class="card-text">Unit: {{ requests.0.unit }}</p>
+                            <p class="card-text">Date: {{ requests.0.date }}</p>
+                            <p class="card-text">Time: {{ requests.0.time }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div id="cardContainer2" class="d-none justify-content-center" onclick="handleCardClickCont('cardContainer2')">
+            {% for request in requests %}
+                {% if forloop.counter > 1 %}
+                    <div class="col-md-6 mb-4 mx-auto">
+                        {% if forloop.counter == 2 %}
+                        <h4 class="text-left">More Matches</h4>
+                        {% endif %}
+                        <a href="{% url 'Thanks' request_id=request.requests_id %}" class="card-link">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Request ID: {{ request.requests_id }}</h5>
+                                    <p class="card-text">Status: {{ request.requests_status.request_status_name }}</p>
+                                    <p class="card-text">Donor: {{ request.donate_user.first_name }} {{ request.donate_user.last_name }}</p>
+                                    <p class="card-text">Requester: {{ request.requestor.first_name }} {{ request.requestor.last_name }}</p>
+                                    <p class="card-text">Location: {{ request.area }} (Lat: {{ request.location_lat }}, Long: {{ request.location_long }})</p>
+                                    <p class="card-text">Information: {{ request.info }}</p>
+                                    <p class="card-text">Type: {% if request.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
+                                    <p class="card-text">Item Type: {{ request.item_type.description }}</p>
+                                    <p class="card-text">Unit: {{ request.unit }}</p>
+                                    <p class="card-text">Date: {{ request.date }}</p>
+                                    <p class="card-text">Time: {{ request.time }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% if requests|length > 1 %}
+        <div class="d-flex flex-column align-items-center">
+            <button id="showMoreBtn" class="btn btn-primary theme-color" onclick="handleShowMoreClick()">Show More <i class="bi bi-chevron-compact-down"></i></button>
+            <a id="manualDonationBtn" href="{% url 'Manual Donation' %}" class="btn btn-light mt-3 d-none">Did not like our suggestions? Choose from all open requests</a>
+        </div>
+        <br>
+        {% endif %}
+    </div>
+{% endblock %}
