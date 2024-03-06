@@ -97,7 +97,7 @@
                 </div>
                 <div class="col-md-10">
                     <div class="card-body">
-                        <h5 class="card-title">{{ request.donate_user.first_name }} {{ request.donate_user.last_name }} , {{ request.unit }} </h5>
+                        <h5 class="card-title">{{ request.requestor.first_name }} {{ request.requestor.last_name }} , {{ request.unit }} </h5>
                         <p class="card-text">{{ request.info }}</p>
                         <p class="card-text">{% if request.type_id == 1 %}Food{% else %}Equipment{% endif %} , {{ request.item_type.description }} , Amount: {{ request.item_quantity }}</p>
                         <p class="card-text">Scheduled for: {{ request.schedule_date }} {{ request.schedule_time }}</p>
