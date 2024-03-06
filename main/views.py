@@ -124,6 +124,10 @@ def dashboard(request):
 
 @login_required()
 def pending(request):
+    if 'remove' in request.GET:
+        remove_value = request.GET['remove']
+        requests.objects.filter(requests_id=remove_value).delete()
+
     pending_list = requests.objects.filter(
         Q(donate_user=request.user.id) | Q(requestor=request.user.id),
         Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value)

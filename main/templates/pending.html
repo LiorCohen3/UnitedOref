@@ -40,7 +40,7 @@
                     {% if request.requests_status.request_status_name == "Not Delivered" and request.requestor_id == user_id %}
                     <button type="button" class="btn btn-outline-success"  onclick="window.location.href='/main/pending?confirm={{request.requests_id}}'"><i class="bi bi-check-lg"></i></i></button>
                     {% endif %}
-                    <button type="button" class="btn btn-outline-danger"  onclick="window.location.href='/main/pending?del={{request.requests_id}}'"><i class="bi bi-trash3"></i></button>
+                    <button type="button" class="btn btn-outline-danger"  onclick="window.location.href='/main/pending?remove={{request.requests_id}}'"><i class="bi bi-trash3"></i></button>
                 </div>
             </div>
         </div>
