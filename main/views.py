@@ -128,6 +128,12 @@ def pending(request):
         remove_value = request.GET['remove']
         requests.objects.filter(requests_id=remove_value).delete()
 
+    if 'confirm' in request.GET:
+        confirm_value = request.GET['confirm']
+        requests_object = get_object_or_404(requests, requests_id=confirm_value)
+        requests_object.requests_status_id = 1
+        requests_object.save()
+
     pending_list = requests.objects.filter(
         Q(donate_user=request.user.id) | Q(requestor=request.user.id),
         Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value)
