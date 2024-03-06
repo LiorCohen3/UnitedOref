@@ -229,9 +229,9 @@ def request_form(request):
             requestor = request.user
             unit = request.user.unit
             the_item_itself = item_type.objects.get(description=item_name)
-            type_id = the_item_itself.item_type_id
-            request_type = the_item_itself.request_type
-            created_object = requests.objects.create(item_name=item_name, area=area, info=info, item_quantity=item_quantity, requestor=requestor, item_type_id=request_type, unit=unit, type_id=type_id)
+            type_id = the_item_itself.item_type_id  # 1-13
+            request_type = the_item_itself.request_type # 1 or 2
+            created_object = requests.objects.create(item_name=item_name, area=area, info=info, item_quantity=item_quantity, requestor=requestor, item_type_id=type_id, unit=unit, type_id=request_type)
             this_id = created_object.requests_id
             return redirect('Location Form', id=this_id)
     else:
