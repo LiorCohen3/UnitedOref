@@ -187,7 +187,10 @@ nav img {
 .image-option input[type="radio"] {
   display: none;
 }
-
+.minimap {
+        height: 400px; /* Adjust the height as needed */
+        width: 100%;   /* Set the width to 100% to fill the parent container */
+}
 .image-option img {
   width: 200px;
   height: 210px;
