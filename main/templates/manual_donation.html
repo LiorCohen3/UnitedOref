@@ -93,15 +93,13 @@
                             <p class="card-text">Status: {{ request.requests_status.request_status_name }}</p>
                             <p class="card-text">Donor: {{ request.donate_user.first_name }} {{ request.donate_user.last_name }}</p>
                             <p class="card-text">Requester: {{ request.requestor.first_name }} {{ request.requestor.last_name }}</p>
-                            <p class="card-text">Location: {{ request.area }} (Lat: {{ request.location_lat }}, Long: {{ request.location_long }})</p>
+                            <p class="card-text">Location: {{ request.area }} <button type="button" class="btn btn-outline-danger"  onclick="window.location.href='/main/pending?del={{request.requests_id}}'"><i class="bi bi-geo-alt"></i></button></p>
                             <p class="card-text">Information: {{ request.info }}</p>
                             <p class="card-text">Type: {% if request.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
                             <p class="card-text">Item Type: {{ request.item_type.description }}</p>
                             <p class="card-text">Unit: {{ request.unit }}</p>
-                            <p class="card-text">Date: {{ request.date }}</p>
-                            <p class="card-text">Time: {{ request.time }}</p>
-                            <p class="card-text">Schedule Date: {{ request.schedule_date }}</p>
-                            <p class="card-text">Schedule Time: {{ request.schedule_time }}</p>
+                            <p class="card-text">Date and Time: {{ request.date }} {{ request.time }}</p>
+                            <p class="card-text">Schedule Date and Time: {{ request.schedule_date }} {{ request.schedule_time }}</p>
                         </div>
                     </div>
                 </a>

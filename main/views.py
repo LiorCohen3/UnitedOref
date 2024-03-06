@@ -147,14 +147,12 @@ def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST)
         if form.is_valid():
-            # Assuming you have a User model, update the user details here
             request.user.first_name = form.cleaned_data['first_name']
             request.user.last_name = form.cleaned_data['last_name']
             request.user.phone = form.cleaned_data['phone']
             request.user.email = form.cleaned_data['email']
             request.user.save()
-            flag = True
-            #
+            #flag = True
             messages.success(request, 'User information updated successfully.')
             return redirect('Dashboard')
 
@@ -178,7 +176,6 @@ def edit_user(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST)
         if form.is_valid():
-            # Assuming you have a User model, update the user details here
             request.user.first_name = form.cleaned_data['first_name']
             request.user.last_name = form.cleaned_data['last_name']
             request.user.phone = form.cleaned_data['phone']
@@ -218,10 +215,7 @@ def request_form(request):
             the_item_itself = item_type.objects.get(description=item_name)
             type_id = the_item_itself.item_type_id
             request_type = the_item_itself.request_type
-            created_object = requests.objects.create(item_name=item_name, area=area, info=info,
-                                                     item_quantity=item_quantity, requestor=requestor,
-                                                     item_type_id=request_type, unit=unit, type_id=type_id)
-            created_object = requests.objects.create(item_name=item_name, area=area, info=info, item_quantity=item_quantity, requestor=requestor, item_type_id=request_type, type_id=type_id)
+            created_object = requests.objects.create(item_name=item_name, area=area, info=info, item_quantity=item_quantity, requestor=requestor, item_type_id=request_type, unit=unit, type_id=type_id)
             render(request, 'request_form.html', {'form': form})
             this_id = created_object.requests_id
             return redirect('Location Form', id=this_id)
