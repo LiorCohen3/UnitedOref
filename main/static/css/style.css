@@ -188,7 +188,7 @@ nav img {
   display: none;
 }
 .minimap {
-        height: 400px; /* Adjust the height as needed */
+        height: 100%; /* Adjust the height as needed */
         width: 100%;   /* Set the width to 100% to fill the parent container */
 }
 .image-option img {

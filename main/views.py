@@ -51,8 +51,17 @@ def manual_donation(request):
         template_name = 'history.html'
     else:
         # Fetch all requests where status is pending and requestor is not the current user
-        requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).exclude(
-            requestor=request.user.id).select_related('requests_status', 'item_type').all()
+        # requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).exclude(
+        #     requestor=request.user.id).select_related('requests_status', 'item_type').all()
+        requests_list = requests.objects.filter(
+            requests_status=RequestStatusId.PENDING.value,
+            location_lat__isnull=False,
+            location_long__isnull=False
+        ).exclude(
+            requestor=request.user.id
+        ).select_related(
+            'requests_status', 'item_type'
+        ).all()[:10]
         template_name = 'manual_donation.html'
 
     # Apply sorting

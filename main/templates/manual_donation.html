@@ -93,13 +93,17 @@
             <div class="card mb-3 mx-auto" style="max-width: auto;">
         <div class="row g-0">
           <div class="col-md-4">
-            <div class="minimap" id="map{{ request.requests_id }}"></div>
+           <a href="https://www.google.com/maps?q={{ request.location_lat }},{{ request.location_long }}" target="_blank">
+                 <div class="minimap" id="map{{ request.requests_id }}"></div>
+           </a>
+
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">{{ request.donate_user.first_name }} {{ request.donate_user.last_name }} , {{ request.unit }} {{ request.requests_id }}</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+              <h5 class="card-title">{{ request.donate_user.first_name }} {{ request.donate_user.last_name }} , {{ request.unit }} </h5>
+              <p class="card-text">{{ request.info }}</p>
+              <p class="card-text">{% if request.type_id == 1 %}Food{% else %}Equipment{% endif %} , {{ request.item_type.description }} , Amount: {{ request.item_quantity }}</p>
+              <p class="card-text">Scheduled for: {{ request.schedule_date }} {{ request.schedule_time }}</p>
             </div>
           </div>
         </div>
