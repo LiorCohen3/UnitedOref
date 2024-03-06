@@ -1,29 +1,15 @@
-# from Date import Date
-# from Item import Item 
-# from Location import Location
-# from Request import Request
-# from Request import Status
 from datetime import datetime
 
 
-# import models
-
-
-# area 1-north  2-center  3-south
-# type 1-food  2-equ
-# auto_match 1-auto  2-manual
-
-# donationCap=20
-
-
-def alg(requests_list, area, item_type, count, donation_type=1):
+def alg(requests_list, area, item_type, count, donation_type):
     alg_score = {}
     current_date_time = datetime.now()
     current_year = current_date_time.year
     current_month = current_date_time.month
     current_day = current_date_time.day
     for index, req in enumerate(requests_list):
-        alg_score[index] = 1
+        print(f"vars: area: {area}, item_type: {item_type}, count: {count}, donation_type: {donation_type}")
+        alg_score[index] = 0
         if req.area == area:  # same area donation
             alg_score[index] = alg_score[index] + 200
         elif (area == "North" and req.area == "South") or (
@@ -32,12 +18,14 @@ def alg(requests_list, area, item_type, count, donation_type=1):
         else:  # semi far area donation
             alg_score[index] = alg_score[index] + 100
 
-        if req.type_id == int(item_type):  # type of donation matches
-            alg_score[index] = alg_score[index] + 200
-        if req.item_quantity <= count:  # he can donate more than the req
-            alg_score[index] += 5 * (count / req.item_quantity)
-        else:  # the amount he can is lower than the req
-            alg_score[index] -= 30
+        if req.item_type == int(item_type):  # type of item matches
+            alg_score[index] += 150
+            if req.item_quantity <= count:  # he can donate more than the req
+                alg_score[index] += 50 * (req.item_quantity / count)
+            else:  # the amount he can is lower than the req
+                alg_score[index] -= 50
+        if req.type_id == int(donation_type):
+            alg_score[index] += 100
 
         request_date = str(req.date).split('-')
         request_year = int(request_date[0])

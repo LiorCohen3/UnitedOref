@@ -173,6 +173,19 @@ nav img {
     padding: 5px;
 }
 
+.error {
+    color: #ff0000; /* Red color for error messages */
+    font-weight: bold; /* Bold font for emphasis */
+    margin-bottom: 10px; /* Add some bottom margin for separation */
+}
+
+.error {
+    color: #ff0000; /* Red color for error messages */
+    font-weight: bold; /* Bold font for emphasis */
+    margin-bottom: 10px; /* Add some bottom margin for separation */
+    list-style-type: none;
+}
+
 .fit {
     width: fit-content;
     height: fit-content;

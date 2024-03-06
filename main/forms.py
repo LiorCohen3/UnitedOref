@@ -2,6 +2,7 @@ from django import forms
 from django.db import models
 from .models import item_type
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django import forms
 
 
 class DonationForm(forms.Form):
@@ -31,10 +32,10 @@ class DonationForm(forms.Form):
         (13, 'Tactical Helmets'),
     ]
 
-    area = forms.ChoiceField(choices=AREA_CHOICES)
-    item_type = forms.ChoiceField(choices=ITEM_TYPE_CHOICES)
-    donation_type = forms.ChoiceField(choices=DONATION_TYPE)
-    count = forms.IntegerField()
+    area = forms.ChoiceField(choices=AREA_CHOICES, widget=forms.RadioSelect)
+    item_type = forms.ChoiceField(choices=ITEM_TYPE_CHOICES, required=True)
+    donation_type = forms.ChoiceField(choices=DONATION_TYPE, widget=forms.RadioSelect)
+    count = forms.IntegerField(required=True, validators=[MinValueValidator(1), MaxValueValidator(500)])
 
 
 class EditProfileForm(forms.Form):

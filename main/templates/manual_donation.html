@@ -18,109 +18,108 @@
 {% endblock %}
 
 {% block content %}
-    <br><br><br><br><br>
-    <div class="container">
-        <h1 class="text-center mb-4">Request List</h1>
-        <div class="d-flex justify-content-center gap-2 mx-auto mt-2 align-items-center">
-            <button id="sortButton" class="bi bi-sort-down my-auto"></button>
-            <button class="{% if sort_value == 'date' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
-                    onclick="window.location.href='/main/manual/?{% if filters %}{% for filter in filters %}&filter={{ filter }}{% endfor %}{% endif %}&sort_value=date&sort_direction=down'">Date
+<br><br><br><br><br>
+<div class="container">
+    <h1 class="text-center mb-4">Request List</h1>
+    <div class="d-flex justify-content-center gap-2 mx-auto mt-2 align-items-center">
+        <button id="sortButton" class="bi bi-sort-down my-auto"></button>
+        <button class="{% if sort_value == 'date' %}btn btn-secondary{% else %}btn btn-outline-secondary{% endif %}"
+                onclick="window.location.href='/main/manual/?{% if filters %}{% for filter in filters %}&filter={{ filter }}{% endfor %}{% endif %}&sort_value=date&sort_direction=down'">Date
+        </button>
+        <i class="bi bi-funnel my-auto"></i>
+        <div class="btn-group">
+            <button type="button" class="btn {% if filters|contains_substring:'area_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Area
             </button>
-            <i class="bi bi-funnel my-auto"></i>
-            <div class="btn-group">
-                <button type="button" class="btn {% if filters|contains_substring:'area_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Area
-                </button>
-                <ul class="dropdown-menu">
-                    {% for area in areas %}
-                    <li>
-                        <input class="margin-left-5" type="checkbox" id="{{ area }}" name="area" value="area_{{ area }}" {% if 'area_'|add:area in filters %}checked{% endif %}>
-                        <label for="{{ area }}">{{ area }}</label>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="btn-group">
-                <button type="button" class="btn {% if filters|contains_substring:'type_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Type
-                </button>
-                <ul class="dropdown-menu">
-                    {% for type_name in type_names %}
-                    <li>
-                        <input class="margin-left-5" type="checkbox" id="{{ type_name }}" name="type" value="type_{{ type_name }}" {% if 'type_'|add:type_name in filters %}checked{% endif %}>
-                        <label for="{{ type_name }}">{{ type_name }}</label>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="btn-group">
-                <button type="button" class="btn {% if filters|contains_substring:'unit_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Unit
-                </button>
-                <ul class="dropdown-menu">
-                    {% for unit_name in units %}
-                    <li>
-                        <input class="margin-left-5" type="checkbox" id="{{ unit_name }}" name="unit" value="unit_{{ unit_name }}" {% if 'unit_'|add:unit_name in filters %}checked{% endif %}>
-                        <label for="{{ unit_name }}">{{ unit_name }}</label>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="btn-group">
-                <button type="button" class="btn {% if filters|contains_substring:'item_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Item Type
-                </button>
-                <ul class="dropdown-menu fit">
-                    {% for item_type_name in item_types %}
-                    <li>
-                        <input class="margin-left-5" type="checkbox" id="{{ item_type_name }}" name="item_type" value="item_{{ item_type_name }}" {% if 'item_'|add:item_type_name in filters %}checked{% endif %}>
-                        <label for="{{ item_type_name }}">{{ item_type_name }}</label>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% if filters %}
-            <button class="btn btn-outline-danger btn-xs" onclick="window.location.href='/main/manual{% if sort_value %}?sort_value={{ sort_value }}&sort_direction={{ sort_direction }}{% endif %}'">x</button>
-            {% endif %}
-            <button class="btn btn-primary theme-color" id="applyFilterBtn">Apply </button>
+            <ul class="dropdown-menu">
+                {% for area in areas %}
+                <li>
+                    <input class="margin-left-5" type="checkbox" id="{{ area }}" name="area" value="area_{{ area }}" {% if 'area_'|add:area in filters %}checked{% endif %}>
+                    <label for="{{ area }}">{{ area }}</label>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
+        <div class="btn-group">
+            <button type="button" class="btn {% if filters|contains_substring:'type_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Type
+            </button>
+            <ul class="dropdown-menu">
+                {% for type_name in type_names %}
+                <li>
+                    <input class="margin-left-5" type="checkbox" id="{{ type_name }}" name="type" value="type_{{ type_name }}" {% if 'type_'|add:type_name in filters %}checked{% endif %}>
+                    <label for="{{ type_name }}">{{ type_name }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn {% if filters|contains_substring:'unit_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Unit
+            </button>
+            <ul class="dropdown-menu">
+                {% for unit_name in units %}
+                <li>
+                    <input class="margin-left-5" type="checkbox" id="{{ unit_name }}" name="unit" value="unit_{{ unit_name }}" {% if 'unit_'|add:unit_name in filters %}checked{% endif %}>
+                    <label for="{{ unit_name }}">{{ unit_name }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn {% if filters|contains_substring:'item_' %}btn-secondary{% else %}btn-outline-secondary{% endif %} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Item Type
+            </button>
+            <ul class="dropdown-menu fit">
+                {% for item_type_name in item_types %}
+                <li>
+                    <input class="margin-left-5" type="checkbox" id="{{ item_type_name }}" name="item_type" value="item_{{ item_type_name }}" {% if 'item_'|add:item_type_name in filters %}checked{% endif %}>
+                    <label for="{{ item_type_name }}">{{ item_type_name }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% if filters %}
+        <button class="btn btn-outline-danger btn-xs" onclick="window.location.href='/main/manual{% if sort_value %}?sort_value={{ sort_value }}&sort_direction={{ sort_direction }}{% endif %}'">x</button>
+        {% endif %}
+        <button class="btn btn-primary theme-color" id="applyFilterBtn">Apply </button>
+    </div>
 
-
-        <br>
-        <div id="cardContainer" class="justify-content-center" onclick="handleCardClickCont('cardContainer')">
-            {% for request in requests %}
-
-            <div class="card mb-3 mx-auto" style="max-width: auto;">
-        <div class="row g-0">
-          <div class="col-md-2">
-           <a href="https://www.google.com/maps?q={{ request.location_lat }},{{ request.location_long }}" target="_blank">
-                 <div class="minimap" id="map{{ request.requests_id }}"></div>
-           </a>
-
-          </div>
-          <div class="col-md-10">
-            <div class="card-body">
-              <h5 class="card-title">{{ request.donate_user.first_name }} {{ request.donate_user.last_name }} , {{ request.unit }} </h5>
-              <p class="card-text">{{ request.info }}</p>
-              <p class="card-text">{% if request.type_id == 1 %}Food{% else %}Equipment{% endif %} , {{ request.item_type.description }} , Amount: {{ request.item_quantity }}</p>
-              <p class="card-text">Scheduled for: {{ request.schedule_date }} {{ request.schedule_time }}</p>
-                <div class="row justify-content-end">
-                    <div class="col-auto">
-                        <a href="{% url 'Thanks' request_id=request.requests_id %}"><button  class="btn btn-primary theme-color">Donate</button></a>
+    <br>
+    <div id="cardContainer" class="justify-content-center" onclick="handleCardClickCont('cardContainer')">
+        {% for request in requests %}
+        <div class="card mb-3 mx-auto" style="max-width: auto;">
+            <div class="row g-0">
+                <div class="col-md-2">
+                    <a href="https://www.google.com/maps?q={{ request.location_lat }},{{ request.location_long }}" target="_blank">
+                        <div class="minimap" id="map{{ request.requests_id }}"></div>
+                    </a>
+                </div>
+                <div class="col-md-10">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ request.donate_user.first_name }} {{ request.donate_user.last_name }} , {{ request.unit }} </h5>
+                        <p class="card-text">{{ request.info }}</p>
+                        <p class="card-text">{% if request.type_id == 1 %}Food{% else %}Equipment{% endif %} , {{ request.item_type.description }} , Amount: {{ request.item_quantity }}</p>
+                        <p class="card-text">Scheduled for: {{ request.schedule_date }} {{ request.schedule_time }}</p>
+                        <div class="row justify-content-end">
+                            <div class="col-auto">
+                                <a href="{% url 'Thanks' request_id=request.requests_id %}"><button  class="btn btn-primary theme-color">Donate</button></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-          </div>
         </div>
-      </div>
-            {% if request.location_lat is not None and request.location_long is not None %}
-    <script>
-        initMiniMap({{ request.location_lat }}, {{ request.location_long }}, 'map{{ request.requests_id }}');
-    </script>
-{% endif %}
-
-            {% endfor %}
-        </div>
+        {% if request.location_lat is not None and request.location_long is not None %}
+        <script>
+            initMiniMap({{ request.location_lat }}, {{ request.location_long }}, 'map{{ request.requests_id }}');
+        </script>
+        {% endif %}
+        {% endfor %}
     </div>
+    {% if not "/history/" in request.path %}
+    <button id="loadMoreBtn">Load More</button>
+    {% endif %}
+</div>
 
 {% endblock %}

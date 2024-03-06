@@ -48,18 +48,8 @@ def manual_donation(request):
         requests_list = requests.objects.filter(Q(requests_status=RequestStatusId.DONE.value),  Q(donate_user=request.user.id) | Q(requestor=request.user.id))
         template_name = 'history.html'
     else:
-        # Fetch all requests where status is pending and requestor is not the current user
-        # requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).exclude(
-        #     requestor=request.user.id).select_related('requests_status', 'item_type').all()
-        requests_list = requests.objects.filter(
-            requests_status=RequestStatusId.PENDING.value,
-            location_lat__isnull=False,
-            location_long__isnull=False
-        ).exclude(
-            requestor=request.user.id
-        ).select_related(
-            'requests_status', 'item_type'
-        ).all()[:10]
+        requests_list = requests.objects.filter(requests_status=RequestStatusId.PENDING.value).exclude(
+            requestor=request.user.id).select_related('requests_status', 'item_type').all()
         template_name = 'manual_donation.html'
 
     # Apply sorting
@@ -110,6 +100,10 @@ def alg_result(request):
                 return redirect('Dashboard')
             sorted_requests = alg(requests_list, area, item_type, count, donation_type)
             return render(request, 'auto_match.html', {'requests': sorted_requests, 'form': form})
+        else:
+            print("Form is not valid")
+            messages.error(request, 'Please enter count between 1 and 500!')
+            return redirect('Donation Form')
     else:
         form = DonationForm()
     return render(request, 'auto_match.html', {'form': form})
