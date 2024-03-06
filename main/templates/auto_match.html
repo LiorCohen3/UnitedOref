@@ -25,7 +25,7 @@
                             <h5 class="card-title">Request ID: {{ requests.0.requests_id }}</h5>
                             <p class="card-text">Status: {{ requests.0.requests_status.requests.0_status_name }}</p>
                             <p class="card-text">Requester: {{ requests.0.requestor.first_name }} {{ requests.0.requestor.last_name }}</p>
-                            <p class="card-text">Location: {{ requests.0.area }} (Lat: {{ requests.0.location_lat }}, Long: {{ requests.0.location_long }})</p>
+                            <p class="card-text">Location: {{ requests.0.area }} <a href="https://www.google.com/maps/place/{{ request.location_lat }},{{ request.location_long }}" target="_blank"><i class="bi bi-geo-alt"></i></a></p>
                             <p class="card-text">Information: {{ requests.0.info }}</p>
                             <p class="card-text">Type: {% if requests.0.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
                             <p class="card-text">Item Type: {{ requests.0.item_type.description }}</p>
