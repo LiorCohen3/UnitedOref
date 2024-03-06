@@ -58,6 +58,7 @@ class NewRequest(forms.Form):
     item_quantity = forms.IntegerField(required=True)
     requestor = forms.IntegerField(required=True)
     item_type = forms.CharField(required=True)
+    type_id = forms.IntegerField(required=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -66,6 +67,7 @@ class NewRequest(forms.Form):
         if 'requestor' in self.fields:
             del self.fields['requestor']
             del self.fields['item_type']
+            del self.fields['type_id']
 
 
 class LocationForm(forms.Form):

@@ -1,0 +1,17 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{% block extra_head %}
+    <script src="{% static 'js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/map.css' %}">
+
+
+{% endblock %}
+{% block title %}Api{% endblock %}
+
+{% block content %}
+<br><br><br><br><br><br><br>
+<div id="map" ></div>
+<button id="saveB">confirm</button>
+
+
+{% endblock %}

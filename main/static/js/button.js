@@ -41,7 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     const applyFilterBtn = document.getElementById('applyFilterBtn');
-
+    if (!applyFilterBtn) {
+        return;
+    }
     applyFilterBtn.addEventListener('click', function() {
         let filters = [];
 
@@ -98,3 +100,33 @@ function handleCardClick(cardId) {
     });
 }
 
+function handleCardClickCont(contId) {
+    var cont = document.getElementById(contId);
+    cont.addEventListener('click', function(event) {
+        var clickedElement = event.target;
+        var card = clickedElement.closest('.card');
+        if (card) {
+            handleCardClickObject(card);
+        }
+    });
+}
+
+function handleCardClickObject(card) {
+    var allCards = document.querySelectorAll('.card');
+    allCards.forEach(function(cardElement) {
+        cardElement.classList.remove('selected-card');
+    });
+    console.log(card);
+    card.classList.add('selected-card');
+}
+
+function handleShowMoreClick() {
+    var cardContainer2 = document.getElementById('cardContainer2');
+    cardContainer2.classList.toggle('d-none');
+
+    var manualDonationBtn = document.getElementById('manualDonationBtn');
+    manualDonationBtn.classList.toggle('d-none');
+
+    var showMoreBtn = document.getElementById('showMoreBtn');
+    showMoreBtn.innerHTML = showMoreBtn.innerHTML === 'Show More <i class="bi bi-chevron-compact-down"></i>' ? 'Show Less <i class="bi bi-chevron-compact-up"></i>' : 'Show More <i class="bi bi-chevron-compact-down"></i>';
+}

@@ -93,122 +93,6 @@ nav img {
     height: 47px;
 }
 
-.plans_wrapper {
-    display: flex;
-    flex-direction: column;
-
-    margin-top: 10%;
-    width: 100%;
-    height: 100%;
-}
-
-.plans_wrapper>div {
-    margin-left: 5%;
-}
-
-.plans_holder {
-    display: flex;
-    flex-wrap: wrap;
-
-    min-height: 400px;
-    min-width: 1330px;
-}
-
-.plan {
-    background-color: #EEEEEE;
-    width: 465px;
-    height: 310px;
-    margin-bottom: 50px;
-    margin-right: 200px;
-    border-radius: 20px;
-}
-
-.crop {
-    width: 465px;
-    height: 216px;
-    overflow: hidden;
-}
-
-.plans_wrapper img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-}
-
-.plans_wrapper h2 {
-    margin-top: 5px;
-    margin-left: 10px;
-}
-
-.plan_title {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
-    width: 465px;
-    height: 94px;
-}
-
-.plan_bottom {
-    width: 465px;
-    height: 94px;
-}
-
-.bar_white {
-    position: relative;
-    left: 1px;
-
-    background-color: white;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-
-    height: 14px;
-}
-
-.bar_white.fill_98 {
-    width: 2%;
-}
-
-.bar_white.fill_92 {
-    width: 8%;
-}
-
-.bar_white.fill_88 {
-    width: 12%;
-}
-
-.bar_white.fill_80 {
-    width: 20%;
-}
-
-.bar_white.fill_67 {
-    width: 33%;
-}
-
-.bar_white.fill_54 {
-    width: 46%;
-}
-
-.bar_white.fill_30 {
-    width: 70%;
-}
-
-.bar_blue {
-    display: flex;
-    justify-content: flex-end;
-
-    background-color: #FF914E;
-    color: #FF914E;
-
-    width: 436px;
-    height: 14px;
-    border-radius: 10px;
-    margin-left: 15px;
-}
-
 .btn.theme-color {
     background-color: #FF914E;
     border-color: #FF914E;
@@ -228,6 +112,12 @@ nav img {
 
 .margin-left-5 {
     margin-left: 5px;
+}
+
+.logout {
+    position: absolute;
+    right: 10px;
+    top: 7px;
 }
 
 .bi-sort-down,
@@ -264,6 +154,12 @@ nav img {
     height: fit-content;
 }
 
+.chevron {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
 .image-option input[type="radio"] {
   display: none;
 }
@@ -274,67 +170,6 @@ nav img {
   border: 2px solid transparent;
 }
 
-.bar_blue p {
-    position: relative;
-    top: -22px;
-}
-
-.plan_text_holder {
-    width: 80%;
-}
-
-.plan_details {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-}
-
-.exercises_list_div {
-    width: 95%;
-}
-
-.exercises_list_div ul {
-    margin-left: 7%;
-}
-
-.plan_bottom form {
-    height: 72%;
-}
-
-.plan_text_div {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-}
-
-.text_decorator {
-    position: absolute;
-    top: 20px;
-    background-color: white;
-    height: 3px;
-    width: 100%;
-}
-
-.button_div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    height: 100%;
-}
-
-.submit_button {
-    color: white;
-    background-color: #FF914E;
-    border-radius: 30px;
-    font-size: 100%;
-    width: 30%;
-    height: 50%;
-    margin-bottom: 2%;
-}
 
 /* Styles for mobile */
 @media screen and (max-width: 768px) {
