@@ -14,10 +14,11 @@
 
 {% block content %}
 <br><br><br><br><br>
-<div class="d-flex justify-content-evenly mb-2">
-    <a href="{% url 'Donation Type' %}" class="btn btn-primary">Make a Donation!</a>
-    <a href="{% url 'Request Form' %}" class="btn btn-primary">Make a Request</a>
+<div class="d-flex justify-content-center mb-2">
+    <a href="{% url 'Donation Type' %}" class="round-btn me-3">Make a Donation!</a>
+    <a href="{% url 'Request Form' %}" class="round-btn-outlined ms-3">Make a Request</a>
 </div>
+
 
 <!--for edit profile-->
 {% if messages %}
@@ -63,7 +64,7 @@
                             <div class="col"><b>Area</b></div>
                             {% if requests_done_list %}
                             {% for done in requests_done_list %}
-                            <div class="col"></div>
+                            <div class="col">{{ done.donate_user.first_name }} {{ done.donate_user.last_name }}</div>
                             <div class="col">{{ done.area }}</div>
                             {% if forloop.counter < 5 %}
                             <hr>
