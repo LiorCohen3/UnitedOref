@@ -93,16 +93,7 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT')
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'defaultdb',
-#         'USER': 'avnadmin',
-#         'PASSWORD': 'AVNS_51BqNZkvLTxVAcLQw43',
-#         'HOST': 'mysql-1f3516e5-unitedoref-c774.a.aivencloud.com',
-#         'PORT': '18083'
-#     }
-# }
+
 
 
 # Password validation
