@@ -45,9 +45,7 @@ def manual_donation(request):
              'Arayot Hayarden', 'Bardelas', 'Karakal', 'Chilutz Vehatzala', 'Hagana Avirit', 'Chovlim Snapear',
              'Mishmar Hagvul', 'Isuf Kravi', 'UnitedOref']
     if "/history/" in request.path:
-        requests_list = requests.objects.filter(
-            Q(donate_user=request.user.id) | Q(requestor=request.user.id),
-            requests_status=RequestStatusId.DONE.value)
+        requests_list = requests.objects.filter(Q(requests_status=RequestStatusId.DONE.value),  Q(donate_user=request.user.id) | Q(requestor=request.user.id))
         template_name = 'history.html'
     else:
         # Fetch all requests where status is pending and requestor is not the current user
@@ -119,10 +117,9 @@ def alg_result(request):
 
 @login_required()
 def dashboard(request):
-    requests_pending_list = requests.objects.filter(
-        Q(requests_status=RequestStatusId.PENDING.value) | Q(
-            requests_status=RequestStatusId.NOT_DELIVERED.value)).order_by('-date')[:5]
-    requests_done_list = requests.objects.filter(requests_status=RequestStatusId.DONE.value).order_by('-date')[:5]
+    requests_pending_list = requests.objects.filter((Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value))&(Q(donate_user=request.user.id) | Q(requestor=request.user.id))).order_by('-date')[:5]
+    requests_done_list = requests.objects.filter(Q(requests_status=RequestStatusId.DONE.value) & (Q(donate_user=request.user.id) | Q(requestor=request.user.id))).order_by('-date')[:5]
+    # requests_done_list = requests.objects.filter(requests_status=RequestStatusId.DONE.value, requestor=request.user.id).order_by('-date')[:5]
     profile = CustomUser.objects.get(id=request.user.id)
     unit = unit_img.objects.get(unit_name=profile.unit)
 

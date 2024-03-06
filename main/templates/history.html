@@ -83,20 +83,25 @@
 
 
 <br><br><br>
-<div class="container text-center">
+<div class="container text-start">
     <div class="row">
-        {% for request in history_request %}
+        {% for request in requests %}
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
+
+<!--                    <p class="card-text">Status: {{ request.requests_status.request_status_name }}</p>-->
                     <p class="card-text">Donor: {{ request.donate_user.first_name }} {{ request.donate_user.last_name }}</p>
                     <p class="card-text">Requester: {{ request.requestor.first_name }} {{ request.requestor.last_name }}</p>
-                    <p class="card-text">Information: {{ request.info }}</p>
-                    <p class="card-text">Type: {% if request.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
-                    <p class="card-text">Item Type: {{ request.item_type.description }}</p>
+                    <p class="card-text">{{ request.area }} <a href="https://www.google.com/maps?q={{ request.location_lat }},{{ request.location_long }}" target="_blank"><i class="bi bi-geo-alt"></i></a></p>
+<!--                    <p class="card-text">Information: {{ request.info }}</p>-->
+                    <p class="card-text">{% if request.type_id == 1 %}Food{% else %}Equipment{% endif %} : {{ request.info }}</p>
+                    <p class="card-text">{{ request.item_type.description }}, Amount: {{ request.item_quantity }}</p>
                     <p class="card-text">Unit: {{ request.unit }}</p>
-                    <p class="card-text">Date and Time: {{ request.date }} {{ request.time }}</p>
+                    <p class="card-text">Request date and time: {{ request.date }} {{ request.time }}</p>
+                    <p class="card-text">Scheduled for: {{ request.schedule_date }} {{ request.schedule_time }}</p>
                 </div>
+
             </div>
         </div>
         {% if forloop.counter|divisibleby:3 %}
@@ -106,7 +111,5 @@
         {% endif %}
         {% endfor %}
     </div>
-
-</div>
 
 {% endblock %}
