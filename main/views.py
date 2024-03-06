@@ -226,12 +226,11 @@ def request_form(request):
             type_id = the_item_itself.item_type_id
             request_type = the_item_itself.request_type
             created_object = requests.objects.create(item_name=item_name, area=area, info=info, item_quantity=item_quantity, requestor=requestor, item_type_id=request_type, unit=unit, type_id=type_id)
-            render(request, 'request_form.html', {'form': form})
             this_id = created_object.requests_id
             return redirect('Location Form', id=this_id)
     else:
         form = NewRequest()
-        return render(request, 'request_form.html', {'form': form})
+    return render(request, 'request_form.html', {'form': form})
 
 
 @login_required()
@@ -251,7 +250,7 @@ def location_form(request, id):
             return redirect('Dashboard')
     else:
         form = LocationForm()
-        return render(request, 'location_form.html', {'form': form, 'g_api': g_api})
+    return render(request, 'location_form.html', {'form': form, 'g_api': g_api})
 
 
 @login_required()

@@ -1,6 +1,7 @@
 from django import forms
 from django.db import models
 from .models import item_type
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class DonationForm(forms.Form):
@@ -55,10 +56,18 @@ class NewRequest(forms.Form):
 
     area = forms.ChoiceField(choices=AREA_CHOICES)
     info = forms.CharField(max_length=45, required=True)
-    item_quantity = forms.IntegerField(required=True)
     requestor = forms.IntegerField(required=True)
     item_type = forms.CharField(required=True)
     type_id = forms.IntegerField(required=True)
+    item_quantity = forms.IntegerField(required=True)
+
+    def clean_item_quantity(self):
+        item_quantity = self.cleaned_data.get('item_quantity')
+        if item_quantity is None or item_quantity == '':
+            item_quantity = 0
+        if item_quantity < 1 or item_quantity > 500:
+            raise forms.ValidationError('Please enter a value between 1 and 500.')
+        return item_quantity
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
