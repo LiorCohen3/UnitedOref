@@ -98,7 +98,7 @@
                     <p class="card-text">{% if request.type_id == 1 %}Food{% else %}Equipment{% endif %} : {{ request.info }}</p>
                     <p class="card-text">{{ request.item_type.description }}, Amount: {{ request.item_quantity }}</p>
                     <p class="card-text">Unit: {{ request.unit }}</p>
-                    <p class="card-text">Request date and time: {{ request.date }} {{ request.time }}</p>
+                    <p class="card-text">Requested at: {{ request.date }} {{ request.time }}</p>
                     <p class="card-text">Scheduled for: {{ request.schedule_date }} {{ request.schedule_time }}</p>
                 </div>
 

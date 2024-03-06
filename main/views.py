@@ -141,7 +141,7 @@ def pending(request):
         requests_object.save()
 
     pending_list = requests.objects.filter(
-        Q(donate_user=request.user.id) | Q(requestor=request.user.id),
+        Q(donate_user=request.user.id) | Q(requestor=request.user.id)&
         Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value)
     )
     user_id = request.user.id
