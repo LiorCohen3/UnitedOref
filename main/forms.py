@@ -55,7 +55,7 @@ class NewRequest(forms.Form):
     all_objects = item_type.objects.values('description')
     item_name = forms.ChoiceField(choices=[(obj['description'], obj['description']) for obj in all_objects])
 
-    area = forms.ChoiceField(choices=AREA_CHOICES)
+    area = forms.ChoiceField(choices=AREA_CHOICES, widget=forms.RadioSelect)
     info = forms.CharField(max_length=45, required=True)
     requestor = forms.IntegerField(required=True)
     item_type = forms.CharField(required=True)

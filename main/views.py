@@ -162,7 +162,6 @@ def edit_profile(request):
             request.user.phone = form.cleaned_data['phone']
             request.user.email = form.cleaned_data['email']
             request.user.save()
-            #flag = True
             messages.success(request, 'User information updated successfully.')
             return redirect('Dashboard')
 
