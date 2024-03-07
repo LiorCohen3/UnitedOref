@@ -15,8 +15,8 @@
 {% block content %}
 <br><br><br><br><br>
 <div class="d-flex justify-content-center mb-2">
-    <a href="{% url 'Donation Type' %}" class="round-btn me-3">Make a Donation!</a>
-    <a href="{% url 'Request Form' %}" class="round-btn-outlined ms-3">Make a Request</a>
+    <a href="{% url 'Donation Type' %}" class="btn btn-success btn-lg me-3">Make a Donation!</a>
+    <a href="{% url 'Request Form' %}" class="btn btn-outline-success btn-lg ms-3">Make a Request</a>
 </div>
 
 
@@ -24,7 +24,7 @@
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
 {% endif %}

@@ -98,6 +98,11 @@ nav img {
     border-color: #FF914E;
 }
 
+.btn.theme-color-green {
+    background-color: #54AE58;
+    border-color: #54AE58;
+}
+
 .btn.btn-xs {
     padding: .25rem .4rem;
     font-size: .875rem;
@@ -138,29 +143,6 @@ nav img {
     border: 2px solid #54AE58;
 }
 
-.round-btn {
-    border-radius: 20px; /* Adjust the border-radius to your desired value */
-    width: 200px; /* Adjust width and height as needed */
-    height: 50px; /* Adjust width and height as needed */
-    background-color: #54AE58; /* Your desired color */
-    color: white;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.round-btn-outlined {
-    border-radius: 20px; /* Adjust the border-radius to your desired value */
-    width: 200px; /* Adjust width and height as needed */
-    height: 50px; /* Adjust width and height as needed */
-    background-color: transparent; /* Set background color to transparent */
-    color: #54AE58; /* Text color */
-    border: 2px solid #54AE58; /* Outlined border */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none; /* Remove default link underline */
-}
 
 .selected-card::before {
     content: '\2713';
