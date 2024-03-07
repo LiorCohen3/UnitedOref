@@ -18,12 +18,12 @@ def alg(requests_list, area, item_type, count, donation_type):
         else:  # semi far area donation
             alg_score[index] = alg_score[index] + 100
 
-        if req.item_type == int(item_type):  # type of item matches
+        if req.item_type.item_type_id == int(item_type):  # type of item matches
             alg_score[index] += 150
             if req.item_quantity <= count:  # he can donate more than the req
                 alg_score[index] += 50 * (req.item_quantity / count)
             else:  # the amount he can is lower than the req
-                alg_score[index] -= 50
+                alg_score[index] -= 40
         if req.type_id == int(donation_type):
             alg_score[index] += 100
 
@@ -37,6 +37,8 @@ def alg(requests_list, area, item_type, count, donation_type):
         difference = current_date - request_date
         diff_days = difference.days if difference.days < 180 else 180  # 180 days is the maximum to be scored
         alg_score[index] += (2 * diff_days)
+        print(f"req_id: {req.requests_id} area: {req.area} item_type: {req.item_type} type_id: {req.type_id}"
+              f" score: {alg_score[index]}")
 
     sorted_keys = list(sorted(alg_score, key=lambda x: alg_score[x], reverse=True))
     sorted_requests = [requests_list[i] for i in sorted_keys]
