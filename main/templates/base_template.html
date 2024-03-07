@@ -35,7 +35,7 @@
             </ul>
             <form class="logout" action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
-                <button type="submit" class="btn"><i class="bi bi-box-arrow-right" style="font-size: 47px;"></i></button>
+                <button type="submit" class="btn"><i id="logout" class="bi bi-box-arrow-right"></i></button>
             </form>
         </nav>
     </header>
