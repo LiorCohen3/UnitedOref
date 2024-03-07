@@ -17,51 +17,65 @@
     <div class="container">
         <h1 class="text-center mb-4">Matched Donation Requests</h1>
         <div id="cardContainer1" class="justify-content-center" onclick="handleCardClickCont('cardContainer1')">
-            <div class="col-md-6 mb-4 mx-auto">
-                <h4 class="text-left">Best Match Request</h4>
-                <a href="{% url 'Thanks' request_id=requests.0.requests_id %}" class="card-link">
-                    <div class="card">
+            <h4 class="text-left">Best Match Request</h4>
+            <div class="card mb-3 mx-auto" style="max-width: auto;">
+                <div class="row g-0">
+                    <div class="col-md-2">
+                        <a href="https://www.google.com/maps?q={{ requests.0.location_lat }},{{ requests.0.location_long }}" target="_blank">
+                            <div class="minimap" id="map{{ requests.0.requests_id }}"></div>
+                        </a>
+                    </div>
+                    <div class="col-md-10">
                         <div class="card-body">
-                            <h5 class="card-title">Request ID: {{ requests.0.requests_id }}</h5>
-                            <p class="card-text">Status: {{ requests.0.requests_status.requests.0_status_name }}</p>
-                            <p class="card-text">Requester: {{ requests.0.requestor.first_name }} {{ requests.0.requestor.last_name }}</p>
-                            <p class="card-text">Location: {{ requests.0.area }} <a href="https://www.google.com/maps/place/{{ request.location_lat }},{{ request.location_long }}" target="_blank"><i class="bi bi-geo-alt"></i></a></p>
-                            <p class="card-text">Information: {{ requests.0.info }}</p>
-                            <p class="card-text">Type: {% if requests.0.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
-                            <p class="card-text">Item Type: {{ requests.0.item_type.description }}</p>
-                            <p class="card-text">Unit: {{ requests.0.unit }}</p>
-                            <p class="card-text">Date: {{ requests.0.date }}</p>
-                            <p class="card-text">Time: {{ requests.0.time }}</p>
+                            <h5 class="card-title">{{ requests.0.requestor.first_name }} {{ requests.0.requestor.last_name }} , {{ requests.0.unit }} </h5>
+                            <p class="card-text">{{ requests.0.info }}</p>
+                            <p class="card-text">{% if requests.0.type_id == 1 %}Food{% else %}Equipment{% endif %} , {{ requests.0.item_type.description }} , Amount: {{ requests.0.item_quantity }}</p>
+                            <p class="card-text">Scheduled for: {{ requests.0.schedule_date }} {{ requests.0.schedule_time }}</p>
+                            <div class="row justify-content-end">
+                                <div class="col-auto">
+                                    <a href="{% url 'Thanks' request_id=requests.0.requests_id %}"><button  class="btn btn-primary theme-color">Donate</button></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
+            {% if requests.0.location_lat is not None and requests.0.location_long is not None %}
+            <script>
+                initMiniMap({{ requests.0.location_lat }}, {{ requests.0.location_long }}, 'map{{ requests.0.requests_id }}');
+            </script>
+            {% endif %}
         </div>
         <div id="cardContainer2" class="d-none justify-content-center" onclick="handleCardClickCont('cardContainer2')">
             {% for request in requests %}
                 {% if forloop.counter > 1 %}
-                    <div class="col-md-6 mb-4 mx-auto">
-                        {% if forloop.counter == 2 %}
-                        <h4 class="text-left">More Matches</h4>
-                        {% endif %}
-                        <a href="{% url 'Thanks' request_id=request.requests_id %}" class="card-link">
-                            <div class="card">
+                    <div class="card mb-3 mx-auto" style="max-width: auto;">
+                        <div class="row g-0">
+                            <div class="col-md-2">
+                                <a href="https://www.google.com/maps?q={{ request.location_lat }},{{ request.location_long }}" target="_blank">
+                                    <div class="minimap" id="map{{ request.requests_id }}"></div>
+                                </a>
+                            </div>
+                            <div class="col-md-10">
                                 <div class="card-body">
-                                    <h5 class="card-title">Request ID: {{ request.requests_id }}</h5>
-                                    <p class="card-text">Status: {{ request.requests_status.request_status_name }}</p>
-                                    <p class="card-text">Donor: {{ request.donate_user.first_name }} {{ request.donate_user.last_name }}</p>
-                                    <p class="card-text">Requester: {{ request.requestor.first_name }} {{ request.requestor.last_name }}</p>
-                                    <p class="card-text">Location: {{ request.area }} (Lat: {{ request.location_lat }}, Long: {{ request.location_long }})</p>
-                                    <p class="card-text">Information: {{ request.info }}</p>
-                                    <p class="card-text">Type: {% if request.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
-                                    <p class="card-text">Item Type: {{ request.item_type.description }}</p>
-                                    <p class="card-text">Unit: {{ request.unit }}</p>
-                                    <p class="card-text">Date: {{ request.date }}</p>
-                                    <p class="card-text">Time: {{ request.time }}</p>
+                                    <h5 class="card-title">{{ request.requestor.first_name }} {{ request.requestor.last_name }} , {{ request.unit }} </h5>
+                                    <p class="card-text">{{ request.info }}</p>
+                                    <p class="card-text">{% if request.type_id == 1 %}Food{% else %}Equipment{% endif %} , {{ request.item_type.description }} , Amount: {{ request.item_quantity }}</p>
+                                    <p class="card-text">Scheduled for: {{ request.schedule_date }} {{ request.schedule_time }}</p>
+                                    <div class="row justify-content-end">
+                                        <div class="col-auto">
+                                            <a href="{% url 'Thanks' request_id=request.requests_id %}"><button  class="btn btn-primary theme-color">Donate</button></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
+                    {% if request.location_lat is not None and request.location_long is not None %}
+                    <script>
+                        initMiniMap({{ request.location_lat }}, {{ request.location_long }}, 'map{{ request.requests_id }}');
+                    </script>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </div>
