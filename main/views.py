@@ -38,12 +38,12 @@ def manual_donation(request):
 
     areas = ['North', 'Center', 'South']
     type_names = ['Equipment', 'Food']
-    item_types_list = ['Warm Food', 'Dry Food', 'Snacks', 'Winter Clothing', 'Summer Clothing', 'Underwear', 'Socks',
-                       'Tactical Vests', 'Tactical Gloves', 'Tactical Uniform', 'Tactical Boots', 'Tactical Protection',
-                       'Tactical Helmets']
-    units = ['Kfir', 'Givati', 'Golani', 'Nahal', 'Shiryon', 'Totchanim', 'Handasa Kravit', 'Tzanchanim',
-             'Arayot Hayarden', 'Bardelas', 'Karakal', 'Chilutz Vehatzala', 'Hagana Avirit', 'Chovlim Snapear',
-             'Mishmar Hagvul', 'Isuf Kravi', 'UnitedOref']
+    item_types_list = item_type.objects.values('description')
+    item_types_list = [item['description'] for item in item_types_list]
+
+    units = unit_img.objects.values('unit_name')
+    units = [unit['unit_name'] for unit in units]
+
     if "/history/" in request.path:
         requests_list = requests.objects.filter(Q(requests_status=RequestStatusId.DONE.value) & (Q(donate_user=request.user.id) | Q(requestor=request.user.id)))
         template_name = 'history.html'
