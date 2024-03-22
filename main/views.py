@@ -32,6 +32,7 @@ def donation_type(request):
 
 @login_required()
 def manual_donation(request):
+    g_api = os.environ.get("GOOGLE_API")
     sort_value = request.GET.get('sort_value')
     sort_direction = request.GET.get('sort_direction', 'down')
     filters = request.GET.getlist('filter')  # Get multiple filter values if provided
@@ -52,35 +53,49 @@ def manual_donation(request):
             requestor=request.user.id).select_related('requests_status', 'item_type').all()
         template_name = 'manual_donation.html'
 
-    # Apply sorting
     if sort_value == 'date':
         requests_list = requests_list.order_by('date') if sort_direction == 'down' else requests_list.order_by('-date')
-    filtered_requests = []
-    # Apply filters
+
+    filtered_requests = requests_list
+    filter_groups = {
+        'area': [],
+        'type': [],
+        'unit': [],
+        'item': [],
+    }
+
     for filter_value in filters:
-        if "area_" in filter_value:
-            filter_value = filter_value.replace("area_", "")
-            filtered_requests += requests_list.filter(area=filter_value)  # Filter by donate area
-        elif "type_" in filter_value:
-            filter_value = filter_value.replace("type_", "")
-            don_type = 1 if filter_value == 'Food' else 2
-            filtered_requests += requests_list.filter(type_id=don_type)  # Filter by received area
-        elif "unit_" in filter_value:
-            filter_value = filter_value.replace("unit_", "")
-            filtered_requests += requests_list.filter(unit=filter_value)  # Filter by type
-        elif "item_" in filter_value:
-            filter_value = filter_value.replace("item_", "")
-            item = item_type.objects.filter(description=filter_value)
-            filtered_requests += requests_list.filter(item_type=item[0])  # Filter by item type
+        for prefix in filter_groups.keys():
+            if filter_value.startswith(prefix + '_'):
+                value = filter_value.replace(prefix + '_', '')
+                filter_groups[prefix].append(value)
+    for prefix, values in filter_groups.items():
+        if prefix == 'area' and values:
+            filtered_requests = filtered_requests.filter(area__in=values)
+        elif prefix == 'type' and values:
+            don_types = [1 if value == 'Food' else 2 for value in values]
+            filtered_requests = filtered_requests.filter(type_id__in=don_types)
+        elif prefix == 'unit' and values:
+            filtered_requests = filtered_requests.filter(unit__in=values)
+            print(values)
+            print(filtered_requests)
+        elif prefix == 'item' and values:
+            items = item_type.objects.filter(description__in=values)
+            filtered_requests = filtered_requests.filter(item_type__in=items)
+
+    filtered_requests = filtered_requests.distinct()
+    for r in filtered_requests:
+        print(f"req: {r.requests_id}, area: {r.area}, type: {r.type_id}, unit: {r.unit}, item: {r.item_type.description}")
 
     return render(request, template_name, {
-        'requests': filtered_requests or requests_list,
+        'requests': filtered_requests if filters else requests_list,
         'sort_value': sort_value,
         'filters': filters,
         'areas': areas,
         'type_names': type_names,
         'item_types': item_types_list,
-        'units': units
+        'units': units,
+        'g_api': g_api
     })
 
 
