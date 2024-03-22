@@ -16,7 +16,10 @@
 <br><br><br><br><br>
 <div class="d-flex justify-content-center mb-2">
     <a href="{% url 'Donation Type' %}" class="btn btn-success btn-lg me-3">Make a Donation!</a>
+    {% if unit.unit_name != 'UnitedOref' %}
     <a href="{% url 'Request Form' %}" class="btn btn-outline-success btn-lg ms-3">Make a Request</a>
+    {% endif %}
+
 </div>
 
 
