@@ -156,6 +156,7 @@ def pending(request):
         (Q(donate_user=request.user.id) | Q(requestor=request.user.id))&
         (Q(requests_status=RequestStatusId.PENDING.value) | Q(requests_status=RequestStatusId.NOT_DELIVERED.value))
     )
+    pending_list = pending_list.order_by('-requests_status')
     user_id = request.user.id
     return render(request, 'pending.html', {'pending_list': pending_list, "user_id": user_id})
 

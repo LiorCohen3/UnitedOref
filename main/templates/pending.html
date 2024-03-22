@@ -20,20 +20,31 @@
     <div class="row">
         {% for request in pending_list %}
         <div class="col-md-4">
-            <div class="card">
+            <div class="card border-1">
                 <div class="card-body">
-                    <div class="d-flex justify-content-end"><a href="{% url 'Location Form' id=request.requests_id %}"><i class="bi bi-pencil-square"></i></a></div>
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-center align-items-center" style="width: 10px; height: 10px; background-color:
+                        {% if request.requests_status.request_status_name == "Not Delivered" and request.requestor_id == user_id %}
+                green;
+                {% else %}
+                orange;
+                {% endif %}
+                         border-radius: 50%;"></div>
+                        <a href="{% url 'Location Form' id=request.requests_id %}"><i class="bi bi-pencil-square"></i></a>
+                    </div>
 
-                    <p class="card-text">Status: {{ request.requests_status.request_status_name }}</p>
-                    <p class="card-text">Donor: {% if request.donate_user %} {{ request.donate_user.first_name }} {{ request.donate_user.last_name }} {% else %} None {% endif %}</p>
-                    <p class="card-text">Requester: {{ request.requestor.first_name }} {{ request.requestor.last_name }}</p>
-                    <p class="card-text">Location: {{ request.area }} <a href="https://www.google.com/maps/place/{{ request.location_lat }},{{ request.location_long }}" target="_blank"><i class="bi bi-geo-alt"></i></a></p>
-                    <p class="card-text">Information: {{ request.info }}</p>
-                    <p class="card-text">Type: {% if request.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
-                    <p class="card-text">Item Type: {{ request.item_type.description }}</p>
-                    <p class="card-text">Unit: {{ request.unit }}</p>
-                    <p class="card-text">Requested at: {{ request.date }} {{ request.time }}</p>
-                    <p class="card-text">Scheduled for: {{ request.schedule_date }} {{ request.schedule_time }}</p>
+                    <p class="card-text"><b>Status:</b> {{ request.requests_status.request_status_name }}</p>
+                    <p class="card-text"><b>Donor:</b> {% if request.donate_user %} {{ request.donate_user.first_name }} {{ request.donate_user.last_name }} {% else %} None {% endif %}</p>
+                    <p class="card-text"><b>Donor phone:</b> {% if request.donate_user %} {{ request.donate_user.phone }}  {% else %} None {% endif %}</p>
+                    <p class="card-text"><b>Requester:</b> {{ request.requestor.first_name }} {{ request.requestor.last_name }}</p>
+                    <p class="card-text"><b>Requester phone:</b> {{ request.requestor.phone }} </p>
+                    <p class="card-text"><b>Location:</b> {{ request.area }} <a href="https://www.google.com/maps/place/{{ request.location_lat }},{{ request.location_long }}" target="_blank"><i class="bi bi-geo-alt"></i></a></p>
+                    <p class="card-text"><b>Information:</b> {{ request.info }}</p>
+                    <p class="card-text"><b>Type:</b> {% if request.type_id == 1 %}Food{% else %}Equipment{% endif %}</p>
+                    <p class="card-text"><b>Item Type:</b> {{ request.item_type.description }}</p>
+                    <p class="card-text"><b>Unit:</b> {{ request.unit }}</p>
+                    <p class="card-text"><b>Requested at:</b> {{ request.date }} {{ request.time }}</p>
+                    <p class="card-text"><b>Scheduled for:</b> {{ request.schedule_date }} {{ request.schedule_time }}</p>
                 </div>
                 <div class="d-flex justify-content-evenly mb-2 ">
                     {% if request.requests_status.request_status_name == "Not Delivered" and request.requestor_id == user_id %}
