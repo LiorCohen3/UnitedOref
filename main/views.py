@@ -101,6 +101,7 @@ def manual_donation(request):
 
 @login_required()
 def alg_result(request):
+    g_api = os.environ.get("GOOGLE_API")
     if request.method == 'POST':
         form = DonationForm(request.POST)
         if form.is_valid():
@@ -114,7 +115,7 @@ def alg_result(request):
                 messages.info(request, 'Good news! There are currently no open requests.')
                 return redirect('Dashboard')
             sorted_requests = alg(requests_list, area, item_type, count, donation_type)
-            return render(request, 'auto_match.html', {'requests': sorted_requests, 'form': form})
+            return render(request, 'auto_match.html', {'requests': sorted_requests, 'form': form, 'g_api': g_api})
         else:
             print("Form is not valid")
             messages.error(request, 'Please enter count between 1 and 500!')
