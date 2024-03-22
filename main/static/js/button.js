@@ -99,54 +99,6 @@ function handleCardClick(cardId) {
         }
     });
 }
-function initMiniMap(latitude, longitude, mapId) {
-    const myLatLng = { lat: latitude, lng: longitude };
-    const mapElement = document.getElementById(mapId);
-
-    async function initializeMap() {
-        const map = new google.maps.Map(mapElement, {
-            zoom: 12,
-            center: myLatLng
-        });
-
-        new google.maps.Marker({
-            map: map,
-            position: myLatLng,
-            title: 'Your Location'
-        });
-
-//        map.addListener('click', function(event) {
-//            window.open(`https://www.google.com/maps?q=${latitude},${longitude}`);
-//        });
-    }
-
-    function loadGoogleMapsScript() {
-        return new Promise((resolve, reject) => {
-            if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
-                const script = document.createElement('script');
-                script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyDAJaQ8UygIKkx88v4MDq-YYnLDPLPpg8s&callback=initializeMap`;
-                script.onload = resolve;
-                script.onerror = () => reject(new Error('Failed to load Google Maps API'));
-                document.body.appendChild(script);
-            } else {
-                resolve();
-            }
-        });
-    }
-
-    async function initializeMiniMap() {
-        try {
-            await loadGoogleMapsScript();
-            initializeMap();
-        } catch (error) {
-            console.error('Error initializing mini map:', error.message);
-        }
-    }
-
-    initializeMiniMap();
-}
-
-
 
 function handleCardClickCont(contId) {
     var cont = document.getElementById(contId);
