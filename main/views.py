@@ -164,6 +164,7 @@ def edit_profile(request):
             request.user.last_name = form.cleaned_data['last_name']
             request.user.phone = form.cleaned_data['phone']
             request.user.email = form.cleaned_data['email']
+            request.user.unit = form.cleaned_data['unit']
             request.user.save()
             messages.success(request, 'User information updated successfully.')
             return redirect('Dashboard')
@@ -173,6 +174,7 @@ def edit_profile(request):
         'last_name': request.user.last_name,
         'phone': request.user.phone,
         'email': request.user.email,
+        'unit': request.user.unit
     })
 
     return render(request, 'edit_profile.html', {'form': form})

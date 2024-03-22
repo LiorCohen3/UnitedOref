@@ -3,6 +3,8 @@ from django.db import models
 from .models import item_type
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django import forms
+from .models import unit_img
+
 
 
 class DonationForm(forms.Form):
@@ -43,7 +45,12 @@ class EditProfileForm(forms.Form):
     last_name = forms.CharField(max_length=45, required=True)
     phone = forms.CharField(max_length=45, required=True)
     email = forms.EmailField(max_length=254, required=True)
+    unit = forms.ChoiceField(choices=[])
 
+    def __init__(self, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        units = unit_img.objects.all().values_list('unit_name', 'unit_name')
+        self.fields['unit'].choices = units
 
 class NewRequest(forms.Form):
     AREA_CHOICES = [
