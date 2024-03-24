@@ -8,7 +8,6 @@ def alg(requests_list, area, item_type, count, donation_type):
     current_month = current_date_time.month
     current_day = current_date_time.day
     for index, req in enumerate(requests_list):
-        print(f"vars: area: {area}, item_type: {item_type}, count: {count}, donation_type: {donation_type}")
         alg_score[index] = 0
         if req.area == area:  # same area donation
             alg_score[index] = alg_score[index] + 200
@@ -26,6 +25,8 @@ def alg(requests_list, area, item_type, count, donation_type):
                 alg_score[index] -= 40
         if req.type_id == int(donation_type):
             alg_score[index] += 100
+
+        alg_score[index] -= req.requestor.donations_received * 5  # take into account completed requestor donations
 
         request_date = str(req.date).split('-')
         request_year = int(request_date[0])

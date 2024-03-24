@@ -8,6 +8,11 @@ class CustomUser(AbstractUser):
     unit = models.CharField(max_length=45, null=True, default="UnitedOref")
     img = models.CharField(max_length=45, null=True, default="images/profile_img/default.png")
 
+    @property
+    def donations_received(self):
+        # Count the number of requests where the requestor is the current user and the status is "done"
+        return requests.objects.filter(requestor=self, requests_status_id=1).count()
+
     class Meta:
         db_table = 'user'
 

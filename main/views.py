@@ -77,15 +77,11 @@ def manual_donation(request):
             filtered_requests = filtered_requests.filter(type_id__in=don_types)
         elif prefix == 'unit' and values:
             filtered_requests = filtered_requests.filter(unit__in=values)
-            print(values)
-            print(filtered_requests)
         elif prefix == 'item' and values:
             items = item_type.objects.filter(description__in=values)
             filtered_requests = filtered_requests.filter(item_type__in=items)
 
     filtered_requests = filtered_requests.distinct()
-    for r in filtered_requests:
-        print(f"req: {r.requests_id}, area: {r.area}, type: {r.type_id}, unit: {r.unit}, item: {r.item_type.description}")
 
     return render(request, template_name, {
         'requests': filtered_requests if filters else requests_list,
@@ -117,7 +113,6 @@ def alg_result(request):
             sorted_requests = alg(requests_list, area, item_type, count, donation_type)
             return render(request, 'auto_match.html', {'requests': sorted_requests, 'form': form, 'g_api': g_api})
         else:
-            print("Form is not valid")
             messages.error(request, 'Please enter count between 1 and 500!')
             return redirect('Donation Form')
     else:
