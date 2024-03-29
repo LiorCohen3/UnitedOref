@@ -5,7 +5,7 @@ from main.models import CustomUser
 
 class CustomUserForm(UserCreationForm):
     phone = forms.CharField(max_length=45, required=True)
-    real_id = forms.CharField(max_length=45, required=True)
+    real_id = forms.CharField(max_length=9, required=True)
     # unit = forms.CharField(max_length=45, required=True)
     first_name = forms.CharField(max_length=45, required=True)
     last_name = forms.CharField(max_length=45, required=True)
@@ -27,6 +27,24 @@ class CustomUserForm(UserCreationForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords do not match")
         return password2
+
+    def valid_real_id(self):
+        sum = 0
+        for index, val in enumerate(self.real_id):
+            val = int(val)
+            if index == 8:
+                if val == 10 - (sum % 10):
+                    return True
+                else:
+                    return False
+            elif index % 2 == 0:
+                sum += val
+            else:
+                if val * 2 > 9:
+                    sum += val * 2 % 10
+                    sum += val * 2 // 10
+                else:
+                    sum += (val * 2)
 
     def save(self, commit=True):
         user = super().save(commit=False)
