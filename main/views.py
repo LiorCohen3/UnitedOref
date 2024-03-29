@@ -140,7 +140,14 @@ def dashboard(request):
 def pending(request):
     if 'remove' in request.GET:
         remove_value = request.GET['remove']
-        requests.objects.filter(requests_id=remove_value).delete()
+        remove_object = requests.objects.get(requests_id=remove_value)
+        if remove_object.requests_status_id == 3:
+            remove_object.requests_status_id = 2
+            remove_object.donate_user = None
+            remove_object.donate_user = None
+            remove_object.save()
+        else:
+            requests.objects.filter(requests_id=remove_value).delete()
 
     if 'confirm' in request.GET:
         confirm_value = request.GET['confirm']
