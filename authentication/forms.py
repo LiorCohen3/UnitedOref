@@ -28,23 +28,33 @@ class CustomUserForm(UserCreationForm):
             raise forms.ValidationError("Passwords do not match")
         return password2
 
+    def clean(self):
+        cleaned_data = super().clean()
+        real_id = cleaned_data.get('real_id')
+        if real_id and not self.valid_real_id():
+            raise forms.ValidationError("Real ID is missing or incorrect")
+        return cleaned_data
+
     def valid_real_id(self):
-        sum = 0
-        for index, val in enumerate(self.real_id):
-            val = int(val)
-            if index == 8:
-                if val == 10 - (sum % 10):
-                    return True
+        real_id = self.cleaned_data.get('real_id')
+        if real_id:
+            sum = 0
+            for index, val in enumerate(real_id):
+                val = int(val)
+                if index == 8:
+                    if val == 10 - (sum % 10):
+                        return True
+                    else:
+                        return False
+                elif index % 2 == 0:
+                    sum += val
                 else:
-                    return False
-            elif index % 2 == 0:
-                sum += val
-            else:
-                if val * 2 > 9:
-                    sum += val * 2 % 10
-                    sum += val * 2 // 10
-                else:
-                    sum += (val * 2)
+                    if val * 2 > 9:
+                        sum += val * 2 % 10
+                        sum += val * 2 // 10
+                    else:
+                        sum += (val * 2)
+        return False
 
     def save(self, commit=True):
         user = super().save(commit=False)
