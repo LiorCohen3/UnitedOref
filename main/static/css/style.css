@@ -3,7 +3,11 @@
     margin: 0;
     padding: 0;
 }
-
+.mobile-location {
+    display: none;
+    padding-right: 10px;
+    padding-left: 10px;
+}
 body {
     overflow-x: hidden;
     background-color: #F6F8FA;
@@ -205,6 +209,10 @@ nav img {
     #logo {
         display: none;
     }
+    .mobile-location{
+        display: block;
+    }
+
 /*
         position: fixed;
         width: 100%;

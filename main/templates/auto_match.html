@@ -34,6 +34,7 @@
                             <p class="card-text">{{ requests.0.info }}</p>
                             <p class="card-text">{% if requests.0.type_id == 1 %}Food{% else %}Equipment{% endif %} , {{ requests.0.item_type.description }} , Amount: {{ requests.0.item_quantity }}</p>
                             <p class="card-text">Scheduled for: {{ requests.0.schedule_date }} {{ requests.0.schedule_time }}</p>
+                            <p class="mobile-location card-text "><b>Location:</b> {{ request.area }} <a href="https://www.google.com/maps/place/{{ request.location_lat }},{{ request.location_long }}" target="_blank"><i class="bi bi-geo-alt"></i></a></p>
                             <div class="row justify-content-end">
                                 <div class="col-auto">
                                     <a href="{% url 'Thanks' request_id=requests.0.requests_id %}"><button  class="btn btn-primary theme-color">Donate</button></a>
@@ -65,6 +66,8 @@
                                     <p class="card-text">{{ request.info }}</p>
                                     <p class="card-text">{% if request.type_id == 1 %}Food{% else %}Equipment{% endif %} , {{ request.item_type.description }} , Amount: {{ request.item_quantity }}</p>
                                     <p class="card-text">Scheduled for: {{ request.schedule_date }} {{ request.schedule_time }}</p>
+                                    <p class="mobile-location card-text "><b>Location:</b> {{ request.area }} <a href="https://www.google.com/maps/place/{{ request.location_lat }},{{ request.location_long }}" target="_blank"><i class="bi bi-geo-alt"></i></a></p>
+
                                     <div class="row justify-content-end">
                                         <div class="col-auto">
                                             <a href="{% url 'Thanks' request_id=request.requests_id %}"><button  class="btn btn-primary theme-color">Donate</button></a>
