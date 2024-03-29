@@ -67,8 +67,16 @@
                             <div class="col"><b>Area</b></div>
                             {% if requests_done_list %}
                             {% for done in requests_done_list %}
-                            <div class="col">{{ done.donate_user.first_name }} {{ done.donate_user.last_name }}</div>
-                            <div class="col">{{ done.area }}</div>
+                            <div class="col" style="display: flex; align-items: center; margin-top: 2px; margin-bottom: 2px;">
+                                {% if done.type_id == 2 %}
+                                <img src="{% static 'images/equipment-icon.svg' %}" class="type_icon"style="margin-left:1px;">
+                                {% else %}
+                                <img src="{% static 'images/food-icon.svg' %}" class="type_icon">
+                                {% endif %}
+                                <div style="flex: 1;">{{ done.donate_user.first_name }} {{ done.donate_user.last_name }}</div>
+                            </div>
+<!--                            <div class="col">{{ done.donate_user.first_name }} {{ done.donate_user.last_name }}</div>-->
+                            <div class="col" style=" margin-top: 2px; margin-bottom: 2px;">{{ done.area }}</div>
                             {% if forloop.counter < 5 %}
                             <hr>
                             <hr>
@@ -131,8 +139,16 @@
                             <div class="col"><b>Area</b></div>
                             {% if requests_pending_list %}
                             {% for pending in requests_pending_list %}
-                            <div class="col">{{ pending.date }}</div>
-                            <div class="col">{{ pending.area }}</div>
+<!--                            <div class="col"><img style="margin-left: auto;" src="{% static 'images/equipment-icon.png' %}">{{ pending.date }}</div>-->
+                            <div class="col" style="display: flex; align-items: center; margin-top: 2px; margin-bottom: 2px;">
+                                {% if pending.type_id == 2 %}
+                                <img src="{% static 'images/equipment-icon.svg' %}" class="type_icon"style="margin-left:1px;">
+                                {% else %}
+                                <img src="{% static 'images/food-icon.svg' %}" class="type_icon">
+                                {% endif %}
+                                <div style="flex: 1;">{{ pending.date }}</div>
+                            </div>
+                            <div class="col"style=" margin-top: 2px; margin-bottom: 2px;">{{ pending.area }}</div>
                             {% if forloop.counter < 5 %}
                             <hr>
                             <hr>
